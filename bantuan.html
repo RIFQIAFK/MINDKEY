@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pusat Bantuan - MindKey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="pusatbantuan.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <span>MindKey</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Beranda</a>
+                <a href="faq.html">FAQ</a>
+                <a href="bantuan.html" class="active">Pusat Bantuan</a>
+                <span id="userGreeting" class="user-greeting"></span>
+            </nav>
+            <div class="mobile-menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Pusat Bantuan</h1>
+            <p>Tim support kami (dan Hooty) siap membantu Anda.</p>
+        </div>
+    </div>
+
+    <section class="help-section">
+        <div class="container help-flex">
+            <div class="help-content">
+                <h2>Kirim Pesan Anda</h2>
+                <p>Punya pertanyaan tentang aplikasi, masalah aktivasi token, atau kendala pembayaran? Kirim pesan Anda dan kami akan membalas ke email Anda.</p>
+                <img src="owl_mascot.png" alt="Support" class="help-mascot">
+            </div>
+            <div class="help-form-container">
+                <form id="helpForm" onsubmit="submitHelpForm(event)">
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" id="name" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Pesan Anda</label>
+                        <textarea id="message" rows="4" required placeholder="Jelaskan kendala Anda..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-100">Kirim Pesan <i class="fas fa-paper-plane"></i></button>
+                </form>
+                <div id="formSuccessMessage" class="success-message hidden">
+                    <i class="fas fa-check-circle"></i> Pesan berhasil dikirim ke tim support kami!
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="owl_mascot.png" alt="MindKey" width="40">
+                        <span>MindKey</span>
+                    </div>
+                    <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan</h4>
+                    <ul><li><a href="#">Tentang Hooty</a></li><li><a href="#">Panduan Deep Work</a></li></ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul><li><a href="#">Privasi</a></li><li><a href="#">Syarat Ketentuan</a></li></ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = checkLogin();
+            if(user) {
+                document.getElementById('name').value = user.name;
+                document.getElementById('email').value = user.email;
+            }
+        });
+    </script>
+</body>
+</html>

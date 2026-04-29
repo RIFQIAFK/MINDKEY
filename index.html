@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindKey - Buka Potensi Diri</title>
+    <meta name="description" content="Aplikasi fokus & produktivitas dengan teman burung hantu bijak. Kunci pikiranmu menuju sukses.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="images/owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <span>MindKey</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#beranda">Beranda</a>
+                <a href="#fitur">Fitur</a>
+                <a href="#tentang-kami">Tentang Kami</a>
+                <a href="faq.html">FAQ</a>
+                <a href="bantuan.html">Pusat Bantuan</a>
+                <span id="userGreeting" class="user-greeting"></span>
+                <a href="#" onclick="logoutUser()" class="logout-link">Keluar</a>
+                <button class="btn-primary" onclick="goToPayment()">Beli APK</button>
+            </nav>
+            <div class="mobile-menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero">
+        <div class="hero-content">
+            <div class="badge">
+                <i class="fas fa-feather-alt"></i> Official Mascot: Hooty The Owl
+            </div>
+            <h1>Buka Potensi Diri<br>dengan <span>MindKey</span></h1>
+            <p>Aplikasi fokus & produktivitas dengan teman burung hantu bijak. Kunci pikiranmu menuju sukses.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary btn-large" onclick="goToPayment()">
+                    <i class="fas fa-shopping-cart"></i> Beli Sekarang
+                </button>
+                <button class="btn-outline btn-large" onclick="scrollToFeatures()">
+                    <i class="fas fa-play-circle"></i> Lihat Fitur
+                </button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="blob-bg"></div>
+            <img src="images/owl_mascot.png" alt="Hooty The Owl" class="mascot floating">
+            <div class="sparkles">✨</div>
+        </div>
+    </section>
+
+    <!-- Ads Section 1 - Banner Iklan Gambar -->
+    <section class="ads-section">
+        <div class="container">
+            <div class="ad-grid">
+                <!-- Iklan 1 - Ganti foto di folder images/iklan-buku.jpg -->
+                <div class="ad-slot ad-slot-image" onclick="window.open('https://tokopedia.link/bukujurnal', '_blank')">
+                    <div class="ad-label">Sponsored</div>
+                    <img src="images/iklan-buku.jpg" alt="Buku Jurnal Premium" class="ad-image" onerror="this.src='https://placehold.co/600x300/f0e1c5/442a22?text=Buku+Jurnal'">
+                    <div class="ad-overlay">
+                        <div class="ad-badge">HOT DEAL!</div>
+                        <div class="ad-text">
+                            <h4>Jurnal Mindfulness</h4>
+                            <p>Catat perjalanan fokusmu</p>
+                            <span class="ad-price">Rp 89.000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Iklan 2 - Ganti foto di folder images/iklan-teh.jpg -->
+                <div class="ad-slot ad-slot-image" onclick="window.open('https://tokopedia.link/tehherbal', '_blank')">
+                    <div class="ad-label">Sponsored</div>
+                    <img src="images/iklan-teh.jpg" alt="Teh Herbal" class="ad-image" onerror="this.src='https://placehold.co/600x300/f0e1c5/442a22?text=Teh+Herbal'">
+                    <div class="ad-overlay">
+                        <div class="ad-badge">BOGO</div>
+                        <div class="ad-text">
+                            <h4>Teh Herbal Relaksasi</h4>
+                            <p>Beli 1 Gratis 1</p>
+                            <span class="ad-price">Rp 49.000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="fitur" class="features-about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ruang Tenang untuk Pikiran Anda</h2>
+                <p>Alat yang dirancang bukan untuk menahan Anda, tetapi membebaskan Anda.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card feature-large">
+                    <div class="icon-box"><i class="fas fa-hourglass-half"></i></div>
+                    <h3>Sesi Deep Work</h3>
+                    <p>Kunci gangguan dan masuki zona fokus absolut. Timer pintar kami menyesuaikan dengan ritme sirkadian Anda.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+                    <h3>Analitik Ketenangan</h3>
+                    <p>Lacak seberapa sering Anda terdistraksi dan pelajari pola fokus harian Anda.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-box"><i class="fas fa-tree"></i></div>
+                    <h3>Tumbuhkan Kebiasaan</h3>
+                    <p>Setiap jam fokus menanam satu benih kebijaksanaan di perpustakaan virtual Anda.</p>
+                </div>
+                
+                <!-- Iklan Square - Ganti foto di folder images/iklan-headphone-square.jpg -->
+                <div class="ad-slot-square" onclick="window.open('https://tokopedia.link/headphone', '_blank')">
+                    <div class="ad-label">Ad</div>
+                    <img src="images/iklan-headphone-square.jpg" alt="Headphone" class="square-ad-img" onerror="this.src='https://placehold.co/200x200/f0e1c5/442a22?text=Headphone'">
+                    <i class="fas fa-headphones ad-icon-overlay"></i>
+                    <div class="square-ad-content">
+                        <p class="square-ad-title">Headphone Studio</p>
+                        <p class="square-ad-price">Rp 299.000</p>
+                        <button class="square-ad-btn">Beli</button>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="icon-box"><i class="fas fa-book"></i></div>
+                    <h3>Jurnal Refleksi</h3>
+                    <p>Catat hambatan mental Anda di akhir sesi untuk menjernihkan ruang kognitif.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Hooty Section -->
+    <section class="hooty-section">
+        <div class="container hooty-flex">
+            <div class="hooty-image">
+                <img src="images/owl_mascot.png" alt="Hooty" class="hooty-mascot">
+            </div>
+            <div class="hooty-content">
+                <h2>Temui Hooty, Mentor Fokus Anda</h2>
+                <p>Hooty bukanlah sekadar ikon aplikasi. Ia adalah manifestasi dari kebijaksanaan kuno yang memahami bahwa produktivitas sejati tidak berasal dari kesibukan yang membabi buta, melainkan dari kedamaian pikiran. Saat Anda membuka MindKey, Hooty menyambut Anda ke dalam 'ruang baca' virtual—sebuah tempat perlindungan dari notifikasi tanpa akhir.</p>
+                <p>Dengan panduan lembutnya, Anda akan belajar memprioritaskan tugas, menghargai waktu istirahat, dan membangun rutinitas yang berkelanjutan tanpa rasa lelah yang berlebihan.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us -->
+    <section id="tentang-kami" class="about-section">
+        <div class="container about-flex">
+            <div class="about-content">
+                <h2>Tentang MindKey</h2>
+                <p>Kami percaya bahwa setiap orang memiliki potensi luar biasa yang tersembunyi di dalam pikirannya. Terinspirasi dari kebijaksanaan dan fokus seekor burung hantu, MindKey hadir untuk menjadi pendamping setiamu dalam meraih produktivitas tertinggi.</p>
+                <p>Bersama <strong>Hooty</strong>, maskot burung hantu bijak kami, Anda akan dipandu untuk mengatur waktu, memblokir distraksi, dan mencapai tujuan harian Anda dengan lebih efisien.</p>
+            </div>
+            <div class="about-image">
+                <img src="images/owl_mascot.png" alt="MindKey Mascot" class="about-mascot">
+            </div>
+        </div>
+    </section>
+
+    <!-- Ads Section 2 - Horizontal Iklan Gambar -->
+    <section class="ads-section">
+        <div class="container">
+            <div class="ad-grid-2">
+                <!-- Iklan Horizontal 1 - Ganti foto di folder images/iklan-headphone-horiz.jpg -->
+                <div class="ad-slot-horizontal" onclick="window.open('https://tokopedia.link/headphone2', '_blank')">
+                    <div class="ad-label">Sponsored</div>
+                    <div class="ad-horizontal-content">
+                        <img src="images/iklan-headphone-horiz.jpg" alt="Headphone" class="ad-horizontal-img" onerror="this.src='https://placehold.co/80x80/f0e1c5/442a22?text=Sony'">
+                        <div class="ad-horizontal-info">
+                            <p class="ad-title">Sony WH-1000XM5</p>
+                            <p class="ad-desc">Noise Cancelling terbaik untuk fokus maksimal</p>
+                            <div class="ad-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                <span>4.8 (2.3k)</span>
+                            </div>
+                        </div>
+                        <div class="ad-horizontal-price">
+                            <span class="price-old">Rp 3.999.000</span>
+                            <span class="price-new">Rp 3.499.000</span>
+                            <button class="ad-btn">Beli</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Iklan Horizontal 2 - Ganti foto di folder images/iklan-kursi.jpg -->
+                <div class="ad-slot-horizontal" onclick="window.open('https://tokopedia.link/kursi', '_blank')">
+                    <div class="ad-label">Sponsored</div>
+                    <div class="ad-horizontal-content">
+                        <img src="images/iklan-kursi.jpg" alt="Kursi Ergonomis" class="ad-horizontal-img" onerror="this.src='https://placehold.co/80x80/f0e1c5/442a22?text=Kursi'">
+                        <div class="ad-horizontal-info">
+                            <p class="ad-title">Kursi Ergonomis Premium</p>
+                            <p class="ad-desc">Desain lumbar support untuk kerja panjang</p>
+                            <div class="ad-rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span>5.0 (892)</span>
+                            </div>
+                        </div>
+                        <div class="ad-horizontal-price">
+                            <span class="price-old">Rp 1.899.000</span>
+                            <span class="price-new">Rp 1.599.000</span>
+                            <button class="ad-btn">Beli</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="images/owl_mascot.png" alt="MindKey" width="40">
+                        <span>MindKey</span>
+                    </div>
+                    <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan</h4>
+                    <ul>
+                        <li><a href="#">Tentang Hooty</a></li>
+                        <li><a href="#">Panduan Deep Work</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privasi</a></li>
+                        <li><a href="#">Syarat Ketentuan</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', checkLogin);
+
+        // Fungsi untuk redirect ke halaman pembayaran
+        function goToPayment() {
+            if (!checkLogin()) {
+                showToast('Silakan login terlebih dahulu', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+                return;
+            }
+            window.location.href = 'bayar.html';
+        }
+    </script>
+</body>
+</html>

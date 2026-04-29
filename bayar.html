@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - MindKey</title>
+    <meta name="description" content="Bayar dan aktivasi MindKey Premium">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="bayar.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <span>MindKey</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Beranda</a>
+                <a href="index.html#fitur">Fitur</a>
+                <a href="index.html#tentang-kami">Tentang Kami</a>
+                <a href="faq.html">FAQ</a>
+                <a href="bantuan.html">Pusat Bantuan</a>
+                <span id="userGreeting" class="user-greeting"></span>
+                <a href="#" onclick="logoutUser()" class="logout-link">Keluar</a>
+            </nav>
+            <div class="mobile-menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section Payment -->
+    <section class="payment-hero">
+        <div class="container">
+            <div class="payment-hero-content">
+                <div class="payment-badge">
+                    <i class="fas fa-gem"></i> Premium Access
+                </div>
+                <h1>Buka Akses <span>Premium</span> MindKey</h1>
+                <p>Dapatkan semua fitur eksklusif dan temani Hooty dalam perjalanan fokusmu</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Main Section -->
+    <section class="payment-section">
+        <div class="container">
+            <div class="payment-grid">
+                <!-- Left Side - Product Info -->
+                <div class="product-info">
+                    <div class="product-card">
+                        <div class="product-mascot">
+                            <img src="owl_mascot.png" alt="Hooty">
+                            <div class="hooty-speech">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>Siap fokus hari ini?</span>
+                            </div>
+                        </div>
+                        <h2>MindKey Premium</h2>
+                        <p class="product-desc">Aktivasi seumur hidup · Akses semua fitur · Update gratis</p>
+                        
+                        <div class="price-box">
+                            <span class="price-label">Harga spesial</span>
+                            <div class="price">
+                                <span class="currency">Rp</span>
+                                <span class="amount">49</span>
+                                <span class="thousand">.000</span>
+                            </div>
+                            <span class="price-note">Sekali bayar, berlaku selamanya</span>
+                        </div>
+
+                        <div class="feature-list">
+                            <h3><i class="fas fa-crown"></i> Yang Anda Dapatkan:</h3>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Sesi Deep Work tanpa batas</li>
+                                <li><i class="fas fa-check-circle"></i> Analitik fokus lengkap</li>
+                                <li><i class="fas fa-check-circle"></i> Mode malam & tema eksklusif</li>
+                                <li><i class="fas fa-check-circle"></i> Jurnal refleksi digital</li>
+                                <li><i class="fas fa-check-circle"></i> Prioritas support 24/7</li>
+                                <li><i class="fas fa-check-circle"></i> Update fitur seumur hidup</li>
+                            </ul>
+                        </div>
+
+                        <div class="guarantee">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Garansi 14 Hari</strong>
+                                <p>Uang kembali jika tidak puas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Payment Method -->
+                <div class="payment-methods">
+                    <div class="payment-card">
+                        <h3><i class="fas fa-qrcode"></i> Scan QRIS untuk Bayar</h3>
+                        <p class="payment-sub">Bayar pakai GoPay, OVO, DANA, LinkAja, atau mobile banking</p>
+
+                        <!-- QRIS Image -->
+                        <div class="qris-wrapper">
+                            <div class="qris-container">
+                                <img src="qris_code.png" alt="QRIS Code" id="qrisImage" class="qris-image">
+                                <div class="qris-overlay">
+                                    <span>Scan Me</span>
+                                </div>
+                            </div>
+                            <button class="btn-qris-full" onclick="showFullQRIS()">
+                                <i class="fas fa-expand"></i> Klik untuk perbesar QRIS
+                            </button>
+                        </div>
+
+                        <!-- Payment Instructions -->
+                        <div class="payment-instructions">
+                            <h4><i class="fas fa-list-ol"></i> Cara Pembayaran:</h4>
+                            <ol>
+                                <li>Buka aplikasi e-wallet atau mobile banking</li>
+                                <li>Pilih menu scan QRIS / QR Code</li>
+                                <li>Scan QR code di samping</li>
+                                <li>Masukkan jumlah <strong>Rp 49.000</strong></li>
+                                <li>Konfirmasi pembayaran</li>
+                                <li>Klik tombol "Konfirmasi Pembayaran" di bawah</li>
+                            </ol>
+                        </div>
+
+                        <!-- Confirm Button -->
+                        <button class="btn-confirm" onclick="confirmPayment()">
+                            <i class="fas fa-paper-plane"></i> Konfirmasi Pembayaran
+                        </button>
+
+                        <div class="help-contact">
+                            <i class="fas fa-headset"></i>
+                            <span>Ada masalah? <a href="bantuan.html">Hubungi Support</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section">
+        <div class="container">
+            <h2>Apa Kata Pengguna MindKey?</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"MindKey benar-benar mengubah cara saya bekerja. Fokus jadi lebih tajam dan produktivitas meningkat drastis!"</p>
+                    <div class="testimonial-user">
+                        <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="User">
+                        <div>
+                            <strong>Sarah Dewi</strong>
+                            <span>Content Creator</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"Hooty membantu saya tetap fokus saat kerja remote. Fitur Deep Work-nya luar biasa!"</p>
+                    <div class="testimonial-user">
+                        <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="User">
+                        <div>
+                            <strong>Andre Pratama</strong>
+                            <span>Software Engineer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"Akhirnya nemu aplikasi yang beneran membantu fokus. Worth it banget!"</p>
+                    <div class="testimonial-user">
+                        <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="User">
+                        <div>
+                            <strong>Maya Sari</strong>
+                            <span>Mahasiswa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal QRIS Full -->
+    <div id="qrisModal" class="qris-modal">
+        <div class="qris-modal-content">
+            <span class="qris-modal-close" onclick="closeFullQRIS()">&times;</span>
+            <img src="qris_code.png" alt="QRIS Full">
+            <p>Scan QR code dengan aplikasi e-wallet atau mobile banking Anda</p>
+            <button onclick="closeFullQRIS()">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi -->
+    <div id="confirmModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <div class="confirm-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3>Konfirmasi Pembayaran Dikirim</h3>
+            <p>Terima kasih! Admin kami akan memvalidasi pembayaran Anda.</p>
+            <div class="confirm-detail">
+                <p><strong>Email terdaftar:</strong> <span id="confirmEmail"></span></p>
+                <p><strong>Status:</strong> <span class="status-badge-pending">Menunggu validasi</span></p>
+            </div>
+            <p class="confirm-note">Token aktivasi akan dikirim ke email Anda setelah pembayaran divalidasi.</p>
+            <button class="btn-close-modal" onclick="closeConfirmModal()">Kembali ke Beranda</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="owl_mascot.png" alt="MindKey" width="40">
+                        <span>MindKey</span>
+                    </div>
+                    <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan</h4>
+                    <ul>
+                        <li><a href="#">Tentang Hooty</a></li>
+                        <li><a href="#">Panduan Deep Work</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privasi</a></li>
+                        <li><a href="#">Syarat Ketentuan</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check login
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = checkLogin();
+            if (!user) {
+                showToast('Silakan login terlebih dahulu', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            }
+        });
+
+        function confirmPayment() {
+            const user = checkLogin();
+            if (!user) return;
+
+            // Simpan ke localStorage
+            let payments = JSON.parse(localStorage.getItem('mindkey_payments') || '[]');
+            payments.push({
+                id: 'PAY-' + Date.now(),
+                userName: user.name,
+                email: user.email,
+                date: new Date().toISOString(),
+                status: 'pending',
+                amount: 49000
+            });
+            localStorage.setItem('mindkey_payments', JSON.stringify(payments));
+
+            // Tampilkan modal konfirmasi
+            document.getElementById('confirmEmail').textContent = user.email;
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+            window.location.href = 'index.html';
+        }
+
+        function showFullQRIS() {
+            document.getElementById('qrisModal').classList.add('show');
+        }
+
+        function closeFullQRIS() {
+            document.getElementById('qrisModal').classList.remove('show');
+        }
+
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                navLinks.classList.toggle('show');
+            }
+        }
+    </script>
+</body>
+</html>

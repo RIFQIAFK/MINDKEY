@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MindKey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <img src="owl_mascot.png" alt="Logo" width="40">
+                <span>Admin Panel</span>
+            </div>
+            <div class="sidebar-nav">
+                <a href="#" class="active"><i class="fas fa-shopping-cart"></i> Pembelian</a>
+                <a href="#"><i class="fas fa-ticket-alt"></i> Tiket Bantuan</a>
+                <a href="login.html" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="dashboard-header">
+                <h2>Validasi Pembayaran</h2>
+                <button class="btn-outline" onclick="clearData()"><i class="fas fa-trash"></i> Reset Data</button>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Pengguna</th><th>Email</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
+                    </thead>
+                    <tbody id="paymentTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="script.js"></script>
+    <script>
+        if (!localStorage.getItem('mindkey_admin')) {
+            const pwd = prompt("Masukkan Password Admin (admin):");
+            if (pwd === 'admin') {
+                localStorage.setItem('mindkey_admin', 'true');
+            } else {
+                alert("Password Salah!");
+                window.location.href = 'login.html';
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', loadAdminPayments);
+
+        function logoutAdmin() {
+            localStorage.removeItem('mindkey_admin');
+        }
+
+        function clearData() {
+            if(confirm("Yakin ingin menghapus semua data pembayaran?")) {
+                localStorage.removeItem('mindkey_payments');
+                loadAdminPayments();
+                showToast("Data berhasil direset", "info");
+            }
+        }
+    </script>
+</body>
+</html>

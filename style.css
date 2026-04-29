@@ -1,0 +1,995 @@
+/* ============================================
+   STYLE.CSS - KHUSUS UNTUK INDEX.HTMA
+   Halaman Utama MindKey
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #fff8f6;
+    --surface: #fff8f6;
+    --surface-container: #f4ecea;
+    --surface-container-low: #faf2f0;
+    --surface-container-high: #efe6e4;
+    --surface-variant: #e9e1df;
+    --surface-dim: #e0d8d6;
+    
+    --text-primary: #1e1b1a;
+    --text-secondary: #504441;
+    
+    --primary-color: #442a22;
+    --primary-hover: #5d4037;
+    --primary-light: #e7bdb1;
+    
+    --accent-color: #d48166;
+    --accent-hover: #b55c48;
+    
+    --secondary-color: #685d47;
+    --secondary-bg: #f0e1c5;
+    
+    --outline: #827470;
+    --outline-variant: #d4c3be;
+    
+    --shadow-sm: 0 4px 12px rgba(68, 42, 34, 0.08);
+    --shadow-md: 0 8px 24px rgba(68, 42, 34, 0.12);
+    --shadow-lg: 0 12px 32px rgba(68, 42, 34, 0.16);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Work Sans', 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding-top: 80px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Newsreader', 'Outfit', serif;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--primary-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ========== BUTTONS ========== */
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 10px 26px;
+    border-radius: 40px;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn-outline:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn-large {
+    padding: 14px 36px;
+    font-size: 1rem;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(253, 251, 247, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--outline-variant);
+    padding: 1rem 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-family: 'Newsreader', serif;
+    color: var(--primary-color);
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links a {
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--accent-color);
+}
+
+.user-greeting {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-left: 0.5rem;
+}
+
+.logout-link {
+    font-size: 0.8rem;
+    text-decoration: underline !important;
+}
+
+.mobile-menu-icon {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+/* ========== HERO SECTION ========== */
+.hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 4rem;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.badge {
+    background-color: var(--secondary-bg);
+    color: var(--secondary-color);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.hero h1 span {
+    color: var(--accent-color);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 500px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-image {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.blob-bg {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(212, 129, 102, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.mascot {
+    width: 320px;
+    position: relative;
+    z-index: 1;
+    animation: float 5s ease-in-out infinite;
+}
+
+.sparkles {
+    position: absolute;
+    right: 15%;
+    top: 20%;
+    font-size: 2.5rem;
+    animation: pulse 2s infinite;
+}
+
+/* ========== ADS SECTION ========== */
+.ads-section {
+    padding: 3rem 0;
+}
+
+.ad-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.ad-slot {
+    background: var(--surface-container-high);
+    border-radius: 24px;
+    border: 1px solid var(--outline-variant);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    transition: var(--transition);
+}
+
+.ad-slot:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.ad-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 10px;
+    color: var(--outline);
+    text-transform: uppercase;
+}
+
+.ad-content i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.ad-content p {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.ad-content span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.ad-slot-square {
+    background: var(--surface-dim);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ad-slot-square i {
+    font-size: 2rem;
+    color: var(--outline);
+}
+
+.ad-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.ad-slot-horizontal {
+    background: var(--surface-container-high);
+    border-radius: 16px;
+    border: 1px solid var(--outline-variant);
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.ad-horizontal-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ad-horizontal-content i {
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+.ad-title {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.ad-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.ad-btn {
+    margin-left: auto;
+    padding: 6px 16px;
+    background: var(--surface);
+    border: 1px solid var(--outline);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* ========== FEATURES SECTION ========== */
+.features-about {
+    padding: 5rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background: var(--surface-container-low);
+    padding: 1.8rem;
+    border-radius: 24px;
+    border: 1px solid var(--outline-variant);
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-large {
+    grid-column: span 1;
+}
+
+.icon-box {
+    width: 56px;
+    height: 56px;
+    background: var(--primary-color);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+
+.icon-box i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.feature-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* ========== HOOTY SECTION ========== */
+.hooty-section {
+    padding: 4rem 0;
+    background: var(--secondary-bg);
+    border-radius: 40px;
+    margin: 2rem 1rem;
+}
+
+.hooty-flex {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.hooty-image {
+    flex: 1;
+    text-align: center;
+}
+
+.hooty-mascot {
+    width: 250px;
+    border-radius: 50%;
+    box-shadow: var(--shadow-md);
+}
+
+.hooty-content {
+    flex: 2;
+}
+
+.hooty-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.hooty-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/* ========== ABOUT SECTION ========== */
+.about-section {
+    padding: 5rem 0;
+}
+
+.about-flex {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.about-content {
+    flex: 1;
+}
+
+.about-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.about-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.about-image {
+    flex: 1;
+    text-align: center;
+}
+
+.about-mascot {
+    width: 300px;
+    border-radius: 30px;
+    box-shadow: var(--shadow-lg);
+}
+
+/* ========== MODAL ========== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    z-index: 1100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--surface-bright);
+    padding: 2rem;
+    border-radius: 32px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--outline);
+}
+
+.qris-container {
+    margin: 1.5rem auto;
+    width: 200px;
+    height: 200px;
+    background: var(--surface-container-high);
+    border-radius: 24px;
+    padding: 0.5rem;
+}
+
+.qris-image {
+    width: 100%;
+    height: auto;
+}
+
+.payment-amount {
+    background: var(--surface-container);
+    padding: 1rem;
+    border-radius: 20px;
+    margin: 1rem 0;
+}
+
+.payment-amount strong {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    display: block;
+}
+
+.token-box {
+    background: var(--surface-container);
+    padding: 1rem;
+    border-radius: 20px;
+    margin: 1rem 0;
+}
+
+.success-icon-large {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+/* ========== TOAST ========== */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border-radius: 50px;
+    z-index: 1200;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+/* ========== FOOTER ========== */
+footer {
+    background: var(--surface-dim);
+    padding: 3rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid var(--outline-variant);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.footer-brand p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.footer-links h4 {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 992px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero p {
+        margin: 0 auto 2rem;
+    }
+    .hero-buttons {
+        justify-content: center;
+    }
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    .about-flex, .hooty-flex {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .ad-grid, .ad-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    .mobile-menu-icon {
+        display: block;
+    }
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}
+
+/* ============================================
+   STYLE.CSS - DENGAN STYLE IKLAN GAMBAR
+   ============================================ */
+
+/* (Semua style sebelumnya tetap ada, ditambah ini) */
+
+/* ========== IKLAN GAMBAR (IMAGE ADS) ========== */
+
+/* Ad Slot dengan Gambar */
+.ad-slot-image {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0 !important;
+    border-radius: 24px;
+}
+
+.ad-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.ad-slot-image:hover .ad-image {
+    transform: scale(1.05);
+}
+
+.ad-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 1.5rem 1rem 1rem;
+    color: white;
+}
+
+.ad-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--accent-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.ad-text h4 {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.ad-text p {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.8rem;
+}
+
+.ad-price {
+    display: inline-block;
+    background: var(--accent-color);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+/* Square Ad dengan Gambar */
+.ad-slot-square {
+    background: var(--surface-container-high);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ad-slot-square:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+}
+
+.square-ad-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+.ad-icon-overlay {
+    position: absolute;
+    top: 100px;
+    right: 12px;
+    background: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.square-ad-content {
+    padding: 1rem;
+    text-align: center;
+}
+
+.square-ad-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.square-ad-price {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.square-ad-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 6px 20px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.square-ad-btn:hover {
+    background: var(--accent-color);
+}
+
+/* Horizontal Iklan dengan Gambar */
+.ad-slot-horizontal {
+    background: var(--surface);
+    border-radius: 20px;
+    border: 1px solid var(--outline-variant);
+    padding: 1rem;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.ad-slot-horizontal:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.ad-horizontal-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    object-fit: cover;
+}
+
+.ad-horizontal-content {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.ad-horizontal-info {
+    flex: 1;
+}
+
+.ad-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+    color: var(--primary-color);
+}
+
+.ad-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.3rem;
+}
+
+.ad-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.7rem;
+}
+
+.ad-rating i {
+    color: #fbbf24;
+    font-size: 0.7rem;
+}
+
+.ad-rating span {
+    color: var(--text-secondary);
+    margin-left: 0.3rem;
+}
+
+.ad-horizontal-price {
+    text-align: right;
+}
+
+.price-old {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-decoration: line-through;
+    display: block;
+}
+
+.price-new {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    display: block;
+}
+
+.ad-btn {
+    margin-top: 0.5rem;
+    padding: 4px 16px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.ad-btn:hover {
+    background: var(--accent-hover);
+}
+
+/* Responsive Iklan */
+@media (max-width: 768px) {
+    .ad-horizontal-content {
+        flex-wrap: wrap;
+    }
+    
+    .ad-horizontal-price {
+        text-align: left;
+        width: 100%;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: space-between;
+    }
+    
+    .ad-horizontal-price .price-old,
+    .ad-horizontal-price .price-new {
+        display: inline-block;
+    }
+    
+    .ad-image {
+        height: 150px;
+    }
+    
+    .ad-text h4 {
+        font-size: 0.9rem;
+    }
+}
