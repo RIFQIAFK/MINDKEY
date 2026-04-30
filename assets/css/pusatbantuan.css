@@ -372,6 +372,21 @@ footer {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border-top: 1px solid var(--outline-variant);
+        text-align: center;
+    }
+
+    .nav-links.show {
+        display: flex;
     }
     
     .mobile-menu-icon {

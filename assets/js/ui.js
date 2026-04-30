@@ -25,7 +25,7 @@ function scrollToFeatures() {
 function toggleMenu() {
     const navLinks = document.querySelector('.nav-links');
     if (navLinks) {
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        navLinks.classList.toggle('show');
     }
 }
 

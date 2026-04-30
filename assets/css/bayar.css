@@ -143,6 +143,31 @@ body {
     color: var(--primary-color);
 }
 
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border-top: 1px solid var(--outline-variant);
+        text-align: center;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .mobile-menu-icon {
+        display: block;
+    }
+}
+
 /* ========== PAYMENT HERO ========== */
 .payment-hero {
     padding: 4rem 0 2rem;
@@ -165,6 +190,15 @@ body {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .payment-hero {
+        padding: 3rem 1rem;
+    }
+    .payment-hero h1 {
+        font-size: 2.2rem;
+    }
 }
 
 .payment-hero h1 span {

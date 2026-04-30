@@ -169,6 +169,31 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--accent-color);
 }
 
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border-top: 1px solid var(--outline-variant);
+        text-align: center;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .mobile-menu-icon {
+        display: block;
+    }
+}
+
 .user-greeting {
     font-weight: 600;
     color: var(--primary-color);
@@ -714,14 +739,24 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .nav-links {
-        display: none;
-    }
-    .mobile-menu-icon {
-        display: block;
+    .hero {
+        padding: 4rem 1.5rem;
+        min-height: auto;
     }
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .mascot {
+        width: 240px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+    }
+    .btn-large {
+        width: 100%;
     }
 }
 
