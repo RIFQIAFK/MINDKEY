@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - MindKey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="faq.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <span>MindKey</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Beranda</a>
+                <a href="faq.html" class="active">FAQ</a>
+                <a href="bantuan.html">Pusat Bantuan</a>
+                <span id="userGreeting" class="user-greeting"></span>
+            </nav>
+            <div class="mobile-menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="faq-page-header">
+        <div class="container">
+            <h1>Pertanyaan yang Sering Diajukan</h1>
+            <p>Temukan jawaban cepat untuk pertanyaan seputar MindKey</p>
+        </div>
+    </div>
+
+    <div class="faq-search">
+        <div class="container" style="position: relative;">
+            <i class="fas fa-search"></i>
+            <input type="text" id="faqSearchInput" placeholder="Cari pertanyaan...">
+        </div>
+    </div>
+
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-categories">
+                <button class="faq-cat-btn active" data-cat="all">Semua</button>
+                <button class="faq-cat-btn" data-cat="general">Umum</button>
+                <button class="faq-cat-btn" data-cat="payment">Pembayaran</button>
+                <button class="faq-cat-btn" data-cat="technical">Teknis</button>
+                <button class="faq-cat-btn" data-cat="account">Akun</button>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item" data-cat="general">
+                    <button class="faq-question">Bagaimana cara kerja MindKey? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>MindKey menggunakan kombinasi teknik manajemen waktu dan pemblokiran distraksi. Anda dapat mengatur sesi fokus dan Hooty akan memastikan Anda tidak membuka aplikasi yang mengganggu. Sistem kami menggunakan metode Deep Work yang terbukti efektif meningkatkan produktivitas hingga 300%.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="payment">
+                    <button class="faq-question">Apakah aplikasi ini berbayar? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Ya, Anda dapat membeli akses penuh (APK Premium) dengan sekali pembayaran Rp49.000 melalui QRIS yang tersedia di website ini. Pembayaran akan divalidasi oleh admin kami. Tidak ada biaya berlangganan bulanan!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="payment">
+                    <button class="faq-question">Kapan saya mendapatkan token setelah membayar? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Setelah Anda mengklik 'Saya sudah bayar', admin kami akan memvalidasi pembayaran Anda. Jika valid, token akan langsung dikirimkan ke Gmail Anda yang terdaftar saat login. Proses validasi biasanya memakan waktu 5-15 menit pada jam kerja.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="account">
+                    <button class="faq-question">Bagaimana cara login ke MindKey? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Anda hanya perlu login menggunakan akun Gmail Anda. Klik tombol "Login dengan Gmail" dan ikuti instruksinya. Tidak perlu registrasi rumit! Setelah login, Anda bisa langsung membeli dan mengakses aplikasi.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="technical">
+                    <button class="faq-question">Apakah MindKey tersedia untuk iOS? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Saat ini MindKey tersedia untuk Android (APK). Kami sedang mengembangkan versi iOS yang rencananya akan rilis pada Q1 2025. Pantau terus website kami untuk informasi terbaru!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="technical">
+                    <button class="faq-question">Bagaimana cara aktivasi token? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Setelah menerima token melalui email, buka aplikasi MindKey, masuk ke menu "Pengaturan", klik "Aktivasi Premium", lalu masukkan token yang Anda terima. Aplikasi akan langsung teraktivasi dan semua fitur premium akan terbuka.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="general">
+                    <button class="faq-question">Apa itu Hooty? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Hooty adalah maskot burung hantu bijak kami yang akan menjadi mentor fokus Anda. Ia akan memberikan tips produktivitas, mengingatkan waktu istirahat, dan menemani sesi deep work Anda dengan visual dan suara yang menenangkan.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="payment">
+                    <button class="faq-question">Metode pembayaran apa saja yang tersedia? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Saat ini kami menerima pembayaran melalui QRIS yang mendukung semua aplikasi e-wallet (GoPay, OVO, Dana, LinkAja) serta mobile banking dari berbagai bank. Cukup scan QR code yang tersedia di halaman pembelian.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="account">
+                    <button class="faq-question">Apakah bisa mengganti email yang terdaftar? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Untuk saat ini, email tidak dapat diganti karena terikat dengan akun Gmail Anda. Jika ingin menggunakan email lain, silakan login dengan Gmail baru dan lakukan pembelian ulang. Tim support kami siap membantu migrasi data jika diperlukan.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-cat="general">
+                    <button class="faq-question">Apakah ada garansi uang kembali? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Kami memberikan garansi 14 hari. Jika Anda tidak puas dengan produk kami, kami akan mengembalikan 100% uang Anda tanpa pertanyaan. Cukup hubungi tim support kami melalui halaman Pusat Bantuan.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-stats">
+                <div class="stat-item">
+                    <h3>10+</h3>
+                    <p>Artikel Panduan</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Dukungan Tim</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Tingkat Kepuasan</p>
+                </div>
+            </div>
+
+            <div class="still-need-help">
+                <h3>Masih butuh bantuan?</h3>
+                <p>Tim support kami siap membantu Anda 24/7</p>
+                <a href="bantuan.html" class="btn-primary">Hubungi Kami <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="owl_mascot.png" alt="MindKey" width="40">
+                        <span>MindKey</span>
+                    </div>
+                    <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan</h4>
+                    <ul>
+                        <li><a href="#">Tentang Hooty</a></li>
+                        <li><a href="#">Panduan Deep Work</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privasi</a></li>
+                        <li><a href="#">Syarat Ketentuan</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLogin();
+            initFaqAccordion();
+            initFaqSearch();
+            initFaqCategories();
+        });
+
+        function initFaqSearch() {
+            const searchInput = document.getElementById('faqSearchInput');
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const faqItems = document.querySelectorAll('.faq-item');
+                
+                faqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        function initFaqCategories() {
+            const catButtons = document.querySelectorAll('.faq-cat-btn');
+            catButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    catButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const category = btn.dataset.cat;
+                    const faqItems = document.querySelectorAll('.faq-item');
+                    
+                    faqItems.forEach(item => {
+                        if (category === 'all' || item.dataset.cat === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+</html>

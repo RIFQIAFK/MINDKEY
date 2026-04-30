@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - MindKey</title>
+    <meta name="description" content="Kenali lebih dalam tentang MindKey dan tim di baliknya">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="tentangkami.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="images/owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <span>MindKey</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Beranda</a>
+                <a href="index.html#fitur">Fitur</a>
+                <a href="tentang-kami.html" class="active">Tentang Kami</a>
+                <a href="faq.html">FAQ</a>
+                <a href="bantuan.html">Pusat Bantuan</a>
+                <span id="userGreeting" class="user-greeting"></span>
+                <a href="#" onclick="logoutUser()" class="logout-link">Keluar</a>
+                <button class="btn-primary" onclick="goToPayment()">Beli APK</button>
+            </nav>
+            <div class="mobile-menu-icon" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-feather-alt"></i> Kebijaksanaan di Balik MindKey
+                </div>
+                <h1>Kami percaya bahwa produktivitas sejati tidak lahir dari <span>kesibukan yang membabi buta</span>, melainkan dari fokus yang mendalam dan ketenangan pikiran.</h1>
+                <p>Seperti Hooty sang burung hantu, kami memandu Anda menemukan kejernihan di tengah kebisingan digital.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visi Misi Section -->
+    <section class="visi-misi">
+        <div class="container">
+            <div class="visi-card">
+                <div class="visi-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h2>Visi Kami</h2>
+                <p>Menciptakan dunia di mana teknologi berfungsi sebagai perpustakaan yang tenang, bukan alarm yang bising. Mengembangkan kesadaran penuh kepada individu untuk menjalani <strong>"deep work"</strong> yang bermakna.</p>
+            </div>
+            <div class="misi-card">
+                <div class="misi-icon">
+                    <i class="fas fa-flag-checkered"></i>
+                </div>
+                <h2>Misi Kami</h2>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Memberikan batasan yang sehat antara pengguna dan distraksi digital</li>
+                    <li><i class="fas fa-check-circle"></i> Menginspirasi kebiasaan fokus yang berkelanjutan</li>
+                    <li><i class="fas fa-check-circle"></i> Merancang antarmuka yang menenangkan dan intuitif</li>
+                    <li><i class="fas fa-check-circle"></i> Terus berinovasi untuk mendukung produktivitas holistik</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hooty Support Section -->
+    <section class="hooty-support">
+        <div class="container">
+            <div class="hooty-support-card">
+                <div class="hooty-support-image">
+                    <img src="images/owl_mascot.png" alt="Hooty Support">
+                    <div class="hooty-bubble">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>Hooty Soaport</span>
+                    </div>
+                </div>
+                <div class="hooty-support-content">
+                    <h2>Hooty, Mentor Digital Anda</h2>
+                    <p>Selamat datang di Pusat Bantuan. Ada yang bisa Hooty bantu untuk mengembalikan fokus Anda hari ini?</p>
+                    <div class="hooty-question">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Saya lupa cara mengatur timer Deep Work.</span>
+                    </div>
+                    <button class="btn-hooty" onclick="window.location.href='bantuan.html'">
+                        <i class="fas fa-headset"></i> Konsultasi dengan Hooty
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Para Penjaga Kebijaksanaan</h2>
+                <p>Tim di balik MindKey terdiri dari psikolog, desainer produk, dan insinyur yang berdedikasi untuk menciptakan ruang digital yang menenangkan.</p>
+            </div>
+            <div class="team-grid">
+                <!-- Team 1 -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Arya Seno">
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Dr. Arya Seno</h3>
+                        <p class="team-role">Pendiri & Psikolog Klinis</p>
+                        <p class="team-bio">Pakar psikologi kognitif dengan pengalaman 10+ tahun di bidang produktivitas dan mindfulness.</p>
+                    </div>
+                </div>
+
+                <!-- Team 2 -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Larasati Kirana">
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-dribbble"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Larasati Kirana</h3>
+                        <p class="team-role">Kepala Desain Produk</p>
+                        <p class="team-bio">Menciptakan antarmuka yang intuitif dan menenangkan untuk pengalaman fokus optimal.</p>
+                    </div>
+                </div>
+
+                <!-- Team 3 -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Bima Andhika">
+                        <div class="team-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Bima Andhika</h3>
+                        <p class="team-role">Arsitek Sistem</p>
+                        <p class="team-bio">Membangun infrastruktur teknologi yang stabil dan aman untuk mendukung fokus Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <div class="values-header">
+                <h2>Nilai yang Kami Pegang</h2>
+                <p>Prinsip yang menjadi fondasi setiap produk yang kami ciptakan</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Mindfulness</h3>
+                    <p>Mendorong kesadaran penuh dalam setiap interaksi digital</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Empati</h3>
+                    <p>Memahami kebutuhan pengguna dengan mendalam</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Growth</h3>
+                    <p>Berkembang bersama komunitas pengguna setia</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Integritas</h3>
+                    <p>Menjaga privasi dan kepercayaan pengguna</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="journey-section">
+        <div class="container">
+            <div class="journey-content">
+                <h2>Perjalanan MindKey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-desc">Terinspirasi dari riset tentang deep work dan produktivitas</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2023</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-desc">Peluncuran beta dengan 1000 pengguna pertama</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-desc">Peluncuran resmi MindKey Premium</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-desc">Target 100.000 pengguna aktif</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <h2>Bergabunglah dengan Ribuan Pengguna Fokus</h2>
+                <p>Mulai perjalanan produktivitas Anda bersama Hooty dan MindKey</p>
+                <div class="cta-buttons">
+                    <button class="btn-primary btn-large" onclick="goToPayment()">
+                        <i class="fas fa-shopping-cart"></i> Mulai Sekarang
+                    </button>
+                    <button class="btn-outline btn-large" onclick="window.location.href='bantuan.html'">
+                        <i class="fas fa-comment"></i> Konsultasi Gratis
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="images/owl_mascot.png" alt="MindKey" width="40">
+                        <span>MindKey</span>
+                    </div>
+                    <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan</h4>
+                    <ul>
+                        <li><a href="tentang-kami.html">Tentang Hooty</a></li>
+                        <li><a href="#">Panduan Deep Work</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privasi</a></li>
+                        <li><a href="#">Syarat Ketentuan</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLogin();
+        });
+
+        function goToPayment() {
+            if (!checkLogin()) {
+                showToast('Silakan login terlebih dahulu', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+                return;
+            }
+            window.location.href = 'bayar.html';
+        }
+
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                navLinks.classList.toggle('show');
+            }
+        }
+    </script>
+</body>
+</html>
