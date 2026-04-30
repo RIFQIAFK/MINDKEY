@@ -1,0 +1,147 @@
+:root {
+    --primary: #442a22;
+    --primary-light: #6d4c41;
+    --secondary: #d4a373;
+    --accent: #10b981;
+    --bg-cream: #fdfaf5;
+    --text-dark: #2d1b15;
+    --text-light: #7a6b66;
+    --white: #ffffff;
+    --glass: rgba(255, 255, 255, 0.9);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-cream);
+    background-image: radial-gradient(circle at 10% 20%, rgba(212, 163, 115, 0.05) 0%, transparent 40%),
+                      radial-gradient(circle at 90% 80%, rgba(68, 42, 34, 0.05) 0%, transparent 40%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.login-page {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.login-card {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(68, 42, 34, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.login-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 24px;
+    filter: drop-shadow(0 4px 8px rgba(68, 42, 34, 0.2));
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    font-family: 'Newsreader', serif;
+    color: var(--text-dark);
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+p {
+    color: var(--text-light);
+    font-size: 15px;
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.google-btn {
+    width: 100%;
+    padding: 14px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.google-btn i {
+    color: #4285F4;
+    font-size: 20px;
+}
+
+.google-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.google-btn:active {
+    transform: translateY(0);
+}
+
+.admin-link {
+    display: inline-block;
+    margin-top: 24px;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.admin-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* Toast Sync from main */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
