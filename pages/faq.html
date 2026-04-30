@@ -6,21 +6,22 @@
     <title>FAQ - MindKey</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="faq.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/faq.css">
 </head>
 <body>
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <img src="owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <img src="../assets/images/owl_mascot.png" alt="MindKey Logo" class="logo-icon">
                 <span>MindKey</span>
             </div>
             <nav class="nav-links">
-                <a href="index.html">Beranda</a>
+                <a href="../index.html">Beranda</a>
                 <a href="faq.html" class="active">FAQ</a>
                 <a href="bantuan.html">Pusat Bantuan</a>
                 <span id="userGreeting" class="user-greeting"></span>
+                <a href="#" onclick="logoutUser()" class="logout-link">Keluar</a>
             </nav>
             <div class="mobile-menu-icon" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
@@ -152,7 +153,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="owl_mascot.png" alt="MindKey" width="40">
+                        <img src="../assets/images/owl_mascot.png" alt="MindKey" width="40">
                         <span>MindKey</span>
                     </div>
                     <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
@@ -179,56 +180,15 @@
     <div id="toast" class="toast hidden"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/app.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            checkLogin();
-            initFaqAccordion();
             initFaqSearch();
             initFaqCategories();
         });
-
-        function initFaqSearch() {
-            const searchInput = document.getElementById('faqSearchInput');
-            if (!searchInput) return;
-            
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const faqItems = document.querySelectorAll('.faq-item');
-                
-                faqItems.forEach(item => {
-                    const question = item.querySelector('.faq-question').textContent.toLowerCase();
-                    const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
-                    
-                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        }
-
-        function initFaqCategories() {
-            const catButtons = document.querySelectorAll('.faq-cat-btn');
-            catButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    catButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    const category = btn.dataset.cat;
-                    const faqItems = document.querySelectorAll('.faq-item');
-                    
-                    faqItems.forEach(item => {
-                        if (category === 'all' || item.dataset.cat === category) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        }
     </script>
 </body>
 </html>

@@ -6,20 +6,22 @@
     <title>Pusat Bantuan - MindKey</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="pusatbantuan.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/pusatbantuan.css">
 </head>
 <body>
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <img src="owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <img src="../assets/images/owl_mascot.png" alt="MindKey Logo" class="logo-icon">
                 <span>MindKey</span>
             </div>
             <nav class="nav-links">
-                <a href="index.html">Beranda</a>
+                <a href="../index.html">Beranda</a>
                 <a href="faq.html">FAQ</a>
                 <a href="bantuan.html" class="active">Pusat Bantuan</a>
                 <span id="userGreeting" class="user-greeting"></span>
+                <a href="#" onclick="logoutUser()" class="logout-link">Keluar</a>
             </nav>
             <div class="mobile-menu-icon" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
@@ -39,7 +41,7 @@
             <div class="help-content">
                 <h2>Kirim Pesan Anda</h2>
                 <p>Punya pertanyaan tentang aplikasi, masalah aktivasi token, atau kendala pembayaran? Kirim pesan Anda dan kami akan membalas ke email Anda.</p>
-                <img src="owl_mascot.png" alt="Support" class="help-mascot">
+                <img src="../assets/images/owl_mascot.png" alt="Support" class="help-mascot">
             </div>
             <div class="help-form-container">
                 <form id="helpForm" onsubmit="submitHelpForm(event)">
@@ -69,7 +71,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="owl_mascot.png" alt="MindKey" width="40">
+                        <img src="../assets/images/owl_mascot.png" alt="MindKey" width="40">
                         <span>MindKey</span>
                     </div>
                     <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
@@ -89,13 +91,18 @@
     <div id="toast" class="toast hidden"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/app.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = checkLogin();
             if(user) {
-                document.getElementById('name').value = user.name;
-                document.getElementById('email').value = user.email;
+                const nameInput = document.getElementById('name');
+                if (nameInput) nameInput.value = user.name;
+                const emailInput = document.getElementById('email');
+                if (emailInput) emailInput.value = user.email;
             }
         });
     </script>

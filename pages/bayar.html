@@ -7,20 +7,21 @@
     <meta name="description" content="Bayar dan aktivasi MindKey Premium">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="bayar.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/bayar.css">
 </head>
 <body>
     <!-- Navbar -->
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <img src="owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <img src="../assets/images/owl_mascot.png" alt="MindKey Logo" class="logo-icon">
                 <span>MindKey</span>
             </div>
             <nav class="nav-links">
-                <a href="index.html">Beranda</a>
-                <a href="index.html#fitur">Fitur</a>
-                <a href="index.html#tentang-kami">Tentang Kami</a>
+                <a href="../index.html">Beranda</a>
+                <a href="../index.html#fitur">Fitur</a>
+                <a href="../index.html#tentang-kami">Tentang Kami</a>
                 <a href="faq.html">FAQ</a>
                 <a href="bantuan.html">Pusat Bantuan</a>
                 <span id="userGreeting" class="user-greeting"></span>
@@ -53,7 +54,7 @@
                 <div class="product-info">
                     <div class="product-card">
                         <div class="product-mascot">
-                            <img src="owl_mascot.png" alt="Hooty">
+                            <img src="../assets/images/owl_mascot.png" alt="Hooty">
                             <div class="hooty-speech">
                                 <i class="fas fa-comment-dots"></i>
                                 <span>Siap fokus hari ini?</span>
@@ -103,7 +104,7 @@
                         <!-- QRIS Image -->
                         <div class="qris-wrapper">
                             <div class="qris-container">
-                                <img src="qris_code.png" alt="QRIS Code" id="qrisImage" class="qris-image">
+                                <img src="../assets/images/qris_code.png" alt="QRIS Code" id="qrisImage" class="qris-image">
                                 <div class="qris-overlay">
                                     <span>Scan Me</span>
                                 </div>
@@ -193,7 +194,7 @@
     <div id="qrisModal" class="qris-modal">
         <div class="qris-modal-content">
             <span class="qris-modal-close" onclick="closeFullQRIS()">&times;</span>
-            <img src="qris_code.png" alt="QRIS Full">
+            <img src="../assets/images/qris_code.png" alt="QRIS Full">
             <p>Scan QR code dengan aplikasi e-wallet atau mobile banking Anda</p>
             <button onclick="closeFullQRIS()">Tutup</button>
         </div>
@@ -225,7 +226,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="owl_mascot.png" alt="MindKey" width="40">
+                        <img src="../assets/images/owl_mascot.png" alt="MindKey" width="40">
                         <span>MindKey</span>
                     </div>
                     <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
@@ -249,7 +250,11 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/payment.js"></script>
+    <script src="../assets/js/app.js"></script>
     <script>
         // Check login
         document.addEventListener('DOMContentLoaded', () => {
@@ -261,40 +266,6 @@
                 }, 1500);
             }
         });
-
-        async function confirmPayment() {
-            const user = checkLogin();
-            if (!user) return;
-
-            // Menggunakan fungsi submitPaymentToSupabase dari script.js
-            const success = await submitPaymentToSupabase(user, 49000);
-            
-            if (success) {
-                // Tampilkan modal konfirmasi
-                document.getElementById('confirmEmail').textContent = user.email;
-                document.getElementById('confirmModal').classList.add('show');
-            }
-        }
-
-        function closeConfirmModal() {
-            document.getElementById('confirmModal').classList.remove('show');
-            window.location.href = 'index.html';
-        }
-
-        function showFullQRIS() {
-            document.getElementById('qrisModal').classList.add('show');
-        }
-
-        function closeFullQRIS() {
-            document.getElementById('qrisModal').classList.remove('show');
-        }
-
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks) {
-                navLinks.classList.toggle('show');
-            }
-        }
     </script>
 </body>
 </html>

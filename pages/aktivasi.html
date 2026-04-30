@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktivasi Premium - MindKey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <div class="activation-page">
+        <div class="activation-card">
+            <img src="../assets/images/owl_mascot.png" alt="MindKey Logo" class="activation-logo">
+            <h2>Aktivasi Premium</h2>
+            <p>Masukkan Token Aplikasi yang Anda dapatkan setelah pembayaran disetujui.</p>
+            
+            <input type="text" id="tokenInput" class="token-input" placeholder="MIND-XXXXXX" autocomplete="off">
+            
+            <button class="btn-activate" id="activateBtn" onclick="processActivation()">
+                <i class="fas fa-key"></i> Validasi Token
+            </button>
+            <div id="activationStatus" class="status-message"></div>
+            
+            <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/payment.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('mindkey_premium') === 'true') {
+                const status = document.getElementById('activationStatus');
+                if (status) status.innerHTML = '<span style="color:#10b981;">Aplikasi Anda sudah Premium!</span>';
+                const input = document.getElementById('tokenInput');
+                if (input) input.style.display = 'none';
+                const btn = document.getElementById('activateBtn');
+                if (btn) btn.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

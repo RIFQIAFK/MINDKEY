@@ -7,26 +7,26 @@
     <meta name="description" content="Aplikasi fokus & produktivitas dengan teman burung hantu bijak. Kunci pikiranmu menuju sukses.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
     <!-- Navbar -->
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <img src="images/owl_mascot.png" alt="MindKey Logo" class="logo-icon">
+                <img src="assets/images/owl_mascot.png" alt="MindKey Logo" class="logo-icon">
                 <span>MindKey</span>
             </div>
             <nav class="nav-links">
                 <a href="#beranda">Beranda</a>
                 <a href="#fitur">Fitur</a>
                 <a href="#tentang-kami">Tentang Kami</a>
-                <a href="faq.html">FAQ</a>
-                <a href="bantuan.html">Pusat Bantuan</a>
-                <a href="aktivasi.html">Aktivasi</a>
+                <a href="pages/faq.html">FAQ</a>
+                <a href="pages/bantuan.html">Pusat Bantuan</a>
+                <a href="pages/aktivasi.html">Aktivasi</a>
                 <span id="userGreeting" class="user-greeting"></span>
                 <a href="#" onclick="logoutUser()" class="logout-link">Keluar</a>
-                <button class="btn-primary" onclick="goToPayment()">Beli APK</button>
+                <a href="pages/bayar.html" class="btn-primary">Beli APK</a>
             </nav>
             <div class="mobile-menu-icon" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
@@ -43,9 +43,9 @@
             <h1>Buka Potensi Diri<br>dengan <span>MindKey</span></h1>
             <p>Aplikasi fokus & produktivitas dengan teman burung hantu bijak. Kunci pikiranmu menuju sukses.</p>
             <div class="hero-buttons">
-                <button class="btn-primary btn-large" onclick="goToPayment()">
+                <a href="pages/bayar.html" class="btn-primary btn-large">
                     <i class="fas fa-shopping-cart"></i> Beli Sekarang
-                </button>
+                </a>
                 <button class="btn-outline btn-large" onclick="scrollToFeatures()">
                     <i class="fas fa-play-circle"></i> Lihat Fitur
                 </button>
@@ -53,7 +53,7 @@
         </div>
         <div class="hero-image">
             <div class="blob-bg"></div>
-            <img src="images/owl_mascot.png" alt="Hooty The Owl" class="mascot floating">
+            <img src="assets/images/owl_mascot.png" alt="Hooty The Owl" class="mascot floating">
             <div class="sparkles">✨</div>
         </div>
     </section>
@@ -62,10 +62,10 @@
     <section class="ads-section">
         <div class="container">
             <div class="ad-grid">
-                <!-- Iklan 1 - Ganti foto di folder images/iklan-buku.jpg -->
+                <!-- Iklan 1 -->
                 <div class="ad-slot ad-slot-image" onclick="window.open('https://tokopedia.link/bukujurnal', '_blank')">
                     <div class="ad-label">Sponsored</div>
-                    <img src="images/iklan-buku.jpg" alt="Buku Jurnal Premium" class="ad-image" onerror="this.src='https://placehold.co/600x300/f0e1c5/442a22?text=Buku+Jurnal'">
+                    <img src="https://picsum.photos/id/20/600/300" alt="Buku Jurnal Premium" class="ad-image">
                     <div class="ad-overlay">
                         <div class="ad-badge">HOT DEAL!</div>
                         <div class="ad-text">
@@ -76,10 +76,10 @@
                     </div>
                 </div>
 
-                <!-- Iklan 2 - Ganti foto di folder images/iklan-teh.jpg -->
+                <!-- Iklan 2 -->
                 <div class="ad-slot ad-slot-image" onclick="window.open('https://tokopedia.link/tehherbal', '_blank')">
                     <div class="ad-label">Sponsored</div>
-                    <img src="images/iklan-teh.jpg" alt="Teh Herbal" class="ad-image" onerror="this.src='https://placehold.co/600x300/f0e1c5/442a22?text=Teh+Herbal'">
+                    <img src="https://picsum.photos/id/225/600/300" alt="Teh Herbal" class="ad-image">
                     <div class="ad-overlay">
                         <div class="ad-badge">BOGO</div>
                         <div class="ad-text">
@@ -117,10 +117,10 @@
                     <p>Setiap jam fokus menanam satu benih kebijaksanaan di perpustakaan virtual Anda.</p>
                 </div>
                 
-                <!-- Iklan Square - Ganti foto di folder images/iklan-headphone-square.jpg -->
+                <!-- Iklan Square -->
                 <div class="ad-slot-square" onclick="window.open('https://tokopedia.link/headphone', '_blank')">
                     <div class="ad-label">Ad</div>
-                    <img src="images/iklan-headphone-square.jpg" alt="Headphone" class="square-ad-img" onerror="this.src='https://placehold.co/200x200/f0e1c5/442a22?text=Headphone'">
+                    <img src="https://picsum.photos/id/1/200/200" alt="Headphone" class="square-ad-img">
                     <i class="fas fa-headphones ad-icon-overlay"></i>
                     <div class="square-ad-content">
                         <p class="square-ad-title">Headphone Studio</p>
@@ -142,7 +142,7 @@
     <section class="hooty-section">
         <div class="container hooty-flex">
             <div class="hooty-image">
-                <img src="images/owl_mascot.png" alt="Hooty" class="hooty-mascot">
+                <img src="assets/images/owl_mascot.png" alt="Hooty" class="hooty-mascot">
             </div>
             <div class="hooty-content">
                 <h2>Temui Hooty, Mentor Fokus Anda</h2>
@@ -161,7 +161,7 @@
                 <p>Bersama <strong>Hooty</strong>, maskot burung hantu bijak kami, Anda akan dipandu untuk mengatur waktu, memblokir distraksi, dan mencapai tujuan harian Anda dengan lebih efisien.</p>
             </div>
             <div class="about-image">
-                <img src="images/owl_mascot.png" alt="MindKey Mascot" class="about-mascot">
+                <img src="assets/images/owl_mascot.png" alt="MindKey Mascot" class="about-mascot">
             </div>
         </div>
     </section>
@@ -170,11 +170,11 @@
     <section class="ads-section">
         <div class="container">
             <div class="ad-grid-2">
-                <!-- Iklan Horizontal 1 - Ganti foto di folder images/iklan-headphone-horiz.jpg -->
+                <!-- Iklan Horizontal 1 -->
                 <div class="ad-slot-horizontal" onclick="window.open('https://tokopedia.link/headphone2', '_blank')">
                     <div class="ad-label">Sponsored</div>
                     <div class="ad-horizontal-content">
-                        <img src="images/iklan-headphone-horiz.jpg" alt="Headphone" class="ad-horizontal-img" onerror="this.src='https://placehold.co/80x80/f0e1c5/442a22?text=Sony'">
+                        <img src="https://picsum.photos/id/76/80/80" alt="Headphone" class="ad-horizontal-img">
                         <div class="ad-horizontal-info">
                             <p class="ad-title">Sony WH-1000XM5</p>
                             <p class="ad-desc">Noise Cancelling terbaik untuk fokus maksimal</p>
@@ -191,11 +191,11 @@
                     </div>
                 </div>
 
-                <!-- Iklan Horizontal 2 - Ganti foto di folder images/iklan-kursi.jpg -->
+                <!-- Iklan Horizontal 2 -->
                 <div class="ad-slot-horizontal" onclick="window.open('https://tokopedia.link/kursi', '_blank')">
                     <div class="ad-label">Sponsored</div>
                     <div class="ad-horizontal-content">
-                        <img src="images/iklan-kursi.jpg" alt="Kursi Ergonomis" class="ad-horizontal-img" onerror="this.src='https://placehold.co/80x80/f0e1c5/442a22?text=Kursi'">
+                        <img src="https://picsum.photos/id/112/80/80" alt="Kursi Ergonomis" class="ad-horizontal-img">
                         <div class="ad-horizontal-info">
                             <p class="ad-title">Kursi Ergonomis Premium</p>
                             <p class="ad-desc">Desain lumbar support untuk kerja panjang</p>
@@ -221,7 +221,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="images/owl_mascot.png" alt="MindKey" width="40">
+                        <img src="assets/images/owl_mascot.png" alt="MindKey" width="40">
                         <span>MindKey</span>
                     </div>
                     <p>&copy; 2024 MindKey. Kebijaksanaan untuk Produktivitas Modern.</p>
@@ -248,21 +248,10 @@
     <div id="toast" class="toast hidden"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', checkLogin);
-
-        // Fungsi untuk redirect ke halaman pembayaran
-        function goToPayment() {
-            if (!checkLogin()) {
-                showToast('Silakan login terlebih dahulu', 'error');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1500);
-                return;
-            }
-            window.location.href = 'bayar.html';
-        }
-    </script>
+    <script src="assets/js/supabase-config.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/payment.js"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>

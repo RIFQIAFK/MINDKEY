@@ -6,13 +6,13 @@
     <title>Admin Dashboard - MindKey</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
     <div class="admin-layout">
         <div class="sidebar">
             <div class="sidebar-logo">
-                <img src="owl_mascot.png" alt="Logo" width="40">
+                <img src="../assets/images/owl_mascot.png" alt="Logo" width="40">
                 <span>Admin Panel</span>
             </div>
             <div class="sidebar-nav">
@@ -38,10 +38,14 @@
         </div>
     </div>
 
+    <!-- Toast Notification -->
     <div id="toast" class="toast hidden"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="../assets/js/admin.js"></script>
+    <script src="../assets/js/app.js"></script>
     <script>
         if (!localStorage.getItem('mindkey_admin')) {
             const pwd = prompt("Masukkan Password Admin (admin):");
@@ -53,8 +57,6 @@
             }
         }
         
-        window.addEventListener('DOMContentLoaded', loadAdminPayments);
-
         function logoutAdmin() {
             localStorage.removeItem('mindkey_admin');
         }
