@@ -139,11 +139,16 @@ async function submitPaymentToSupabase(user, amount) {
                 }
             ]);
             
-        if (error) throw error;
+        if (error) {
+            console.error("Supabase Error:", error);
+            alert("Database Error: " + (error.message || "Tabel 'payments' mungkin belum dibuat di Supabase. Silakan cek SQL Editor Supabase Anda."));
+            return false;
+        }
+        
         return true;
     } catch (err) {
         console.error("Error submitting payment:", err);
-        showToast("Gagal mengirim pembayaran ke server.", "error");
+        alert("Terjadi kesalahan koneksi ke Supabase.");
         return false;
     }
 }
@@ -160,7 +165,7 @@ async function verifyAppToken(token) {
             .single();
             
         if (error) {
-            console.error("Token tidak ditemukan / error:", error);
+            console.error("Supabase Error:", error);
             return false;
         }
         
@@ -219,6 +224,7 @@ async function loadAdminPayments() {
     } catch (err) {
         console.error("Error loading payments:", err);
         tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: red;">Terjadi kesalahan saat memuat data. Pastikan Anda telah membuat tabel "payments" di Supabase Dashboard.</td></tr>';
+        alert("Gagal memuat data Admin. Pastikan tabel 'payments' sudah ada di Supabase!");
     }
 }
 
