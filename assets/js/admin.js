@@ -59,14 +59,54 @@ function statusLabel(s) {
 
 async function approvePayment(id) {
     if (!supabase) return;
+    
+    // Matikan tombol agar tidak double klik
+    if (event && event.target) {
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>...';
+    }
+
     const token = 'MIND-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+    
     try {
-        const { error } = await supabase.from('payments').update({ status: 'approved', token }).eq('id', id);
-        if (error) throw error;
-        showToast(`✅ Disetujui! Token: ${token}`, 'success');
+        // 1. Ambil data pembayaran untuk dapat Email & Nama
+        const { data: p, error: fetchErr } = await supabase
+            .from('payments')
+            .select('*')
+            .eq('id', id)
+            .single();
+        
+        if (fetchErr) throw fetchErr;
+
+        // 2. Update status & token di database
+        const { error: updateErr } = await supabase
+            .from('payments')
+            .update({ status: 'approved', token: token })
+            .eq('id', id);
+            
+        if (updateErr) throw updateErr;
+
+        // 3. Kirim Email Otomatis via EmailJS
+        const templateParams = {
+            email: p.user_email,
+            name: p.user_name,
+            title: "Pembelian MindKey Disetujui! 🦉",
+            admin_reply: `Selamat! Pembelian Anda telah disetujui.\n\nToken Aktivasi: ${token}\nLink Download APK: https://bit.ly/DownloadMindKeyAPK\n\nSilakan masukkan token tersebut di menu Aktivasi aplikasi MindKey untuk membuka semua fitur.`,
+        };
+
+        if (typeof emailjs !== 'undefined') {
+            await emailjs.send('service_2ehevtg', 'template_w5j90r2', templateParams);
+            showToast(`✅ Disetujui & APK Terkirim ke ${p.user_email}`, 'success');
+        } else {
+            showToast(`✅ Disetujui! Token: ${token}`, 'success');
+        }
+
         loadAdminPayments();
     } catch (err) {
-        showToast('Gagal menyetujui: ' + err.message, 'error');
+        console.error('Approve error:', err);
+        showToast('Gagal memproses: ' + err.message, 'error');
+        loadAdminPayments(); // Refresh table untuk reset tombol
     }
 }
 
@@ -247,22 +287,21 @@ async function sendReply() {
         if (error) throw error;
 
         // 2. Kirim Email via EmailJS
-        // Pastikan Anda sudah setting Template di EmailJS
         const templateParams = {
-            to_email: replyTargetEmail,
-            to_name: document.getElementById('ticketPreview').querySelector('strong').innerText.split('(')[0].trim(),
-            admin_reply: reply,
-            user_message: document.getElementById('ticketPreview').querySelector('p').innerText
+            email: replyTargetEmail, // Sesuai template Anda {{email}}
+            name: document.getElementById('ticketPreview').querySelector('strong').innerText.split('(')[0].trim(), // Sesuai {{name}}
+            title: "Balasan dari Admin MindKey", // Sesuai {{title}}
+            admin_reply: reply // Anda perlu tambahkan {{admin_reply}} di isi template EmailJS Anda
         };
 
         // Ganti SERVICE_ID dan TEMPLATE_ID sesuai dashboard EmailJS Anda
-        if (typeof emailjs !== 'undefined' && !window.location.href.includes('YOUR_PUBLIC_KEY')) {
+        if (typeof emailjs !== 'undefined') {
             try {
-                await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+                await emailjs.send('service_2ehevtg', 'template_w5j90r2', templateParams);
                 showToast('✅ Balasan disimpan & Email terkirim!', 'success');
             } catch (emailErr) {
-                console.warn('EmailJS error (Mungkin kunci belum valid):', emailErr);
-                showToast('✅ Tersimpan di database (Email gagal kirim)', 'info');
+                console.warn('EmailJS error:', emailErr);
+                showToast('✅ Tersimpan (Email gagal kirim)', 'info');
             }
         } else {
             showToast('✅ Balasan berhasil disimpan!', 'success');
