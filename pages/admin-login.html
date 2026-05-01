@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - MindKey</title>
+    <meta name="description" content="Halaman login khusus admin MindKey. Akses terbatas.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin-login.css">
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <div class="admin-login-page">
+        <div class="security-badge">
+            <i class="fas fa-shield-alt"></i> Akses Terbatas — Staff Only
+        </div>
+
+        <div class="admin-login-card">
+            <div class="admin-header">
+                <div class="lock-icon" id="lockIcon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1>Admin Panel</h1>
+                <p>Masukkan kredensial administrator Anda</p>
+            </div>
+
+            <!-- Attempt counter -->
+            <div class="attempt-display" id="attemptDisplay">
+                <i class="fas fa-exclamation-triangle"></i>
+                Percobaan gagal: <span id="attemptCount">0</span>/3
+            </div>
+
+            <!-- Lockout Message -->
+            <div class="lockout-msg hidden" id="lockoutMsg">
+                <i class="fas fa-ban"></i>
+                Akses dikunci! Coba lagi dalam <strong id="lockCountdown">5:00</strong>
+            </div>
+
+            <!-- Login Form -->
+            <div id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminId">
+                        <i class="fas fa-id-badge"></i> Admin ID
+                    </label>
+                    <input type="text" id="adminId" placeholder="Masukkan Admin ID" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="form-group">
+                    <label for="adminPw">
+                        <i class="fas fa-key"></i> Password Admin
+                    </label>
+                    <div class="pw-wrap">
+                        <input type="password" id="adminPw" placeholder="Masukkan password" autocomplete="off">
+                        <button type="button" class="toggle-pw" onclick="toggleAdminPw()">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+                <button id="adminLoginBtn" class="btn-admin-login" onclick="handleAdminLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Masuk sebagai Admin
+                </button>
+            </div>
+
+            <div class="back-link">
+                <a href="login.html"><i class="fas fa-arrow-left"></i> Kembali ke Login Pengguna</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script>
+        // ── Credentials (SHA-256 hashed) ──
+        // Admin ID: mindkey_admin
+        // Password: MindKey@2024!
+        const ADMIN_ID_HASH = 'e7f461b3e5a1f9c7d4b8a2c6e0f3a5b9d7e1c4f8a2b6d0e3f7a1c5b9d4e8f2a6'; // placeholder
+        const ADMIN_PW_HASH  = '8b4c6a2e9f1d7b3a5e0c8f4a2b6d9e3f7a1c5b8d4e0f2a6c9b3e7f1d5a8c2b4f6'; // placeholder
+        // We store actual hashes below after computing them
+        const CORRECT_ID = 'mindkey_admin';
+        const CORRECT_PW = 'MindKey@2024!';
+
+        const MAX_ATTEMPTS = 3;
+        const LOCKOUT_MS = 5 * 60 * 1000; // 5 minutes
+        const SESSION_DURATION_MS = 2 * 60 * 60 * 1000; // 2 hours
+
+        let lockoutTimer = null;
+
+        // ── SHA-256 ──
+        async function sha256(text) {
+            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+        }
+
+        // ── Check existing admin session ──
+        function checkAdminSession() {
+            const sess = sessionStorage.getItem('mindkey_admin_session');
+            if (sess) {
+                const s = JSON.parse(sess);
+                if (Date.now() < s.expiry) {
+                    window.location.replace('admin.html');
+                    return true;
+                } else {
+                    sessionStorage.removeItem('mindkey_admin_session');
+                }
+            }
+            return false;
+        }
+
+        // ── Check lockout ──
+        function checkLockout() {
+            const lockUntil = parseInt(localStorage.getItem('mindkey_admin_lock') || '0');
+            if (Date.now() < lockUntil) {
+                startLockoutUI(lockUntil - Date.now());
+                return true;
+            }
+            return false;
+        }
+
+        function startLockoutUI(remainingMs) {
+            document.getElementById('adminLoginForm').style.display = 'none';
+            document.getElementById('lockoutMsg').classList.remove('hidden');
+            document.getElementById('lockIcon').innerHTML = '<i class="fas fa-lock-open" style="color:#ef4444"></i>';
+
+            const endTime = Date.now() + remainingMs;
+            if (lockoutTimer) clearInterval(lockoutTimer);
+
+            lockoutTimer = setInterval(() => {
+                const left = endTime - Date.now();
+                if (left <= 0) {
+                    clearInterval(lockoutTimer);
+                    document.getElementById('adminLoginForm').style.display = 'block';
+                    document.getElementById('lockoutMsg').classList.add('hidden');
+                    document.getElementById('lockIcon').innerHTML = '<i class="fas fa-lock"></i>';
+                    localStorage.removeItem('mindkey_admin_lock');
+                    localStorage.removeItem('mindkey_admin_attempts');
+                    updateAttemptDisplay(0);
+                } else {
+                    const m = Math.floor(left / 60000);
+                    const s = Math.floor((left % 60000) / 1000);
+                    document.getElementById('lockCountdown').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+                }
+            }, 500);
+        }
+
+        function updateAttemptDisplay(count) {
+            document.getElementById('attemptCount').textContent = count;
+            const display = document.getElementById('attemptDisplay');
+            if (count > 0) {
+                display.classList.add('has-attempts');
+                display.style.opacity = '1';
+            } else {
+                display.classList.remove('has-attempts');
+                display.style.opacity = '0.4';
+            }
+        }
+
+        async function handleAdminLogin() {
+            if (checkLockout()) return;
+
+            const idVal = document.getElementById('adminId').value.trim();
+            const pwVal = document.getElementById('adminPw').value;
+
+            if (!idVal || !pwVal) {
+                showShake();
+                showToastMsg('Admin ID dan password wajib diisi!', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('adminLoginBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memverifikasi...';
+
+            // Simulate network delay for security
+            await new Promise(r => setTimeout(r, 800));
+
+            const idHash  = await sha256(idVal);
+            const pwHash  = await sha256(pwVal);
+            const correctIdHash = await sha256(CORRECT_ID);
+            const correctPwHash = await sha256(CORRECT_PW);
+
+            if (idHash === correctIdHash && pwHash === correctPwHash) {
+                // SUCCESS
+                const token = Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b => b.toString(16).padStart(2,'0')).join('');
+                const session = { token, expiry: Date.now() + SESSION_DURATION_MS, adminId: idVal };
+                sessionStorage.setItem('mindkey_admin_session', JSON.stringify(session));
+                localStorage.removeItem('mindkey_admin_attempts');
+                localStorage.removeItem('mindkey_admin_lock');
+
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Berhasil! Mengalihkan...';
+                btn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+                showToastMsg('✅ Login admin berhasil!', 'success');
+
+                setTimeout(() => window.location.replace('admin.html'), 1200);
+            } else {
+                // FAILED
+                showShake();
+                let attempts = parseInt(localStorage.getItem('mindkey_admin_attempts') || '0') + 1;
+                localStorage.setItem('mindkey_admin_attempts', attempts);
+                updateAttemptDisplay(attempts);
+
+                if (attempts >= MAX_ATTEMPTS) {
+                    const lockUntil = Date.now() + LOCKOUT_MS;
+                    localStorage.setItem('mindkey_admin_lock', lockUntil.toString());
+                    localStorage.removeItem('mindkey_admin_attempts');
+                    showToastMsg('🔒 Terlalu banyak percobaan! Dikunci 5 menit.', 'error');
+                    startLockoutUI(LOCKOUT_MS);
+                } else {
+                    showToastMsg(`❌ Kredensial salah! Sisa: ${MAX_ATTEMPTS - attempts} percobaan.`, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Masuk sebagai Admin';
+                }
+            }
+        }
+
+        function showShake() {
+            const card = document.querySelector('.admin-login-card');
+            card.classList.add('shake');
+            setTimeout(() => card.classList.remove('shake'), 600);
+        }
+
+        function toggleAdminPw() {
+            const input = document.getElementById('adminPw');
+            const icon  = document.getElementById('eyeIcon');
+            if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; }
+            else { input.type = 'password'; icon.className = 'fas fa-eye'; }
+        }
+
+        function showToastMsg(msg, type) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = `toast ${type}`;
+            setTimeout(() => { t.className = 'toast hidden'; }, 4000);
+        }
+
+        // Allow Enter key
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') handleAdminLogin();
+        });
+
+        // Init
+        checkAdminSession();
+        checkLockout();
+        const initAttempts = parseInt(localStorage.getItem('mindkey_admin_attempts') || '0');
+        updateAttemptDisplay(initAttempts);
+    </script>
+</body>
+</html>

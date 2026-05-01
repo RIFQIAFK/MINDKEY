@@ -4,62 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - MindKey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body>
+
     <div class="admin-layout">
-        <div class="sidebar">
+        <!-- ── Sidebar ── -->
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-logo">
                 <img src="../assets/images/owl_mascot.png" alt="Logo" width="40">
                 <span>Admin Panel</span>
             </div>
-            <div class="sidebar-nav">
-                <a href="#" class="active"><i class="fas fa-shopping-cart"></i> Pembelian</a>
-                <a href="#"><i class="fas fa-ticket-alt"></i> Tiket Bantuan</a>
-                <a href="login.html" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+            <div class="sidebar-admin-info" id="sidebarAdminInfo">
+                <i class="fas fa-user-shield"></i>
+                <span>Administrator</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" id="navPayments" onclick="showTab('payments')">
+                    <i class="fas fa-shopping-cart"></i> <span>Pembelian</span>
+                </a>
+                <a href="#" class="nav-item" id="navComplaints" onclick="showTab('complaints')">
+                    <i class="fas fa-comments"></i> <span>Komplain Pelanggan</span>
+                    <span class="badge-count" id="openTicketCount">0</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="session-timer" id="sessionTimer">
+                    <i class="fas fa-clock"></i> Sesi: <span id="sessionTimeLeft">2:00:00</span>
+                </div>
+                <a href="admin-login.html" class="nav-item logout-item" onclick="logoutAdmin()">
+                    <i class="fas fa-sign-out-alt"></i> <span>Keluar</span>
+                </a>
             </div>
         </div>
-        
+
+        <!-- ── Main Content ── -->
         <div class="main-content">
-            <div class="dashboard-header">
-                <h2>Validasi Pembayaran</h2>
+
+            <!-- ── TAB: PAYMENTS ── -->
+            <div id="tabPayments" class="tab-content active-tab">
+                <div class="dashboard-header">
+                    <div>
+                        <h2><i class="fas fa-shopping-cart"></i> Validasi Pembayaran</h2>
+                        <p>Kelola dan setujui permintaan pembelian pengguna</p>
+                    </div>
+                    <button class="btn-refresh" onclick="loadAdminPayments()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Pengguna</th>
+                                <th>Email</th>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentTableBody">
+                            <tr><td colspan="6" class="loading-row"><i class="fas fa-spinner fa-spin"></i> Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr><th>ID</th><th>Pengguna</th><th>Email</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
-                    </thead>
-                    <tbody id="paymentTableBody"></tbody>
-                </table>
+
+            <!-- ── TAB: COMPLAINTS ── -->
+            <div id="tabComplaints" class="tab-content">
+                <div class="dashboard-header">
+                    <div>
+                        <h2><i class="fas fa-comments"></i> Komplain Pelanggan</h2>
+                        <p>Pesan masuk dari Pusat Bantuan</p>
+                    </div>
+                    <button class="btn-refresh" onclick="loadComplaints()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="filter-btn active" id="filterAll" onclick="filterComplaints('all')">
+                        Semua <span id="countAll" class="fc">0</span>
+                    </button>
+                    <button class="filter-btn" id="filterOpen" onclick="filterComplaints('open')">
+                        <span class="dot dot-open"></span> Open <span id="countOpen" class="fc">0</span>
+                    </button>
+                    <button class="filter-btn" id="filterProgress" onclick="filterComplaints('in_progress')">
+                        <span class="dot dot-progress"></span> Diproses <span id="countProgress" class="fc">0</span>
+                    </button>
+                    <button class="filter-btn" id="filterResolved" onclick="filterComplaints('resolved')">
+                        <span class="dot dot-resolved"></span> Selesai <span id="countResolved" class="fc">0</span>
+                    </button>
+                </div>
+
+                <div class="complaints-list" id="complaintsList">
+                    <div class="loading-row"><i class="fas fa-spinner fa-spin"></i> Memuat tiket...</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- ── Reply Modal ── -->
+    <div class="modal-overlay hidden" id="replyModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-reply"></i> Balas Tiket</h3>
+                <button class="modal-close" onclick="closeReplyModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="ticket-preview" id="ticketPreview"></div>
+                <label for="replyText"><i class="fas fa-pen"></i> Balasan Admin:</label>
+                <textarea id="replyText" rows="4" placeholder="Tulis balasan Anda di sini..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeReplyModal()">Batal</button>
+                <button class="btn-send-reply" onclick="sendReply()">
+                    <i class="fas fa-paper-plane"></i> Kirim Balasan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
     <div id="toast" class="toast hidden"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../assets/js/supabase-config.js"></script>
     <script src="../assets/js/ui.js"></script>
-    <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/admin.js"></script>
     <script src="../assets/js/app.js"></script>
+
     <script>
-        if (!localStorage.getItem('mindkey_admin')) {
-            const pwd = prompt("Masukkan Password Admin (admin):");
-            if (pwd === 'admin') {
-                localStorage.setItem('mindkey_admin', 'true');
-            } else {
-                alert("Password Salah!");
-                window.location.href = 'login.html';
+        // ── Auth Guard — Strict Session Check ──
+        const SESSION_DURATION_MS = 2 * 60 * 60 * 1000;
+        let adminSession = null;
+
+        function verifyAdminSession() {
+            const sess = sessionStorage.getItem('mindkey_admin_session');
+            if (!sess) {
+                window.location.replace('admin-login.html');
+                return false;
+            }
+            const s = JSON.parse(sess);
+            if (Date.now() >= s.expiry) {
+                sessionStorage.removeItem('mindkey_admin_session');
+                alert('Sesi admin telah berakhir. Silakan login kembali.');
+                window.location.replace('admin-login.html');
+                return false;
+            }
+            adminSession = s;
+            return true;
+        }
+
+        if (!verifyAdminSession()) { /* stop */ }
+
+        // ── Session Timer Countdown ──
+        function updateSessionTimer() {
+            if (!adminSession) return;
+            const left = adminSession.expiry - Date.now();
+            if (left <= 0) {
+                sessionStorage.removeItem('mindkey_admin_session');
+                window.location.replace('admin-login.html');
+                return;
+            }
+            const h = Math.floor(left / 3600000);
+            const m = Math.floor((left % 3600000) / 60000);
+            const s = Math.floor((left % 60000) / 1000);
+            document.getElementById('sessionTimeLeft').textContent =
+                `${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+        setInterval(updateSessionTimer, 1000);
+        updateSessionTimer();
+
+        // ── Tab Switching ──
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            if (tab === 'payments') {
+                document.getElementById('tabPayments').classList.add('active-tab');
+                document.getElementById('navPayments').classList.add('active');
+                loadAdminPayments();
+            } else if (tab === 'complaints') {
+                document.getElementById('tabComplaints').classList.add('active-tab');
+                document.getElementById('navComplaints').classList.add('active');
+                loadComplaints();
             }
         }
-        
+
         function logoutAdmin() {
-            localStorage.removeItem('mindkey_admin');
+            sessionStorage.removeItem('mindkey_admin_session');
         }
     </script>
 </body>

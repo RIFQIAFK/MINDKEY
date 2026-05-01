@@ -3,24 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - MindKey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Inter:wght@400;500&family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Login & Daftar - MindKey</title>
+    <meta name="description" content="Masuk atau buat akun baru MindKey untuk mulai perjalanan produktivitasmu.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 <body>
+
+    <!-- Background animated particles -->
+    <div class="bg-particles">
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    </div>
+
     <div class="login-page">
         <div class="login-card">
-            <img src="../assets/images/owl_mascot.png" alt="MindKey Logo" class="login-logo">
-            <h2>Masuk ke MindKey</h2>
-            <p>Silakan masuk menggunakan akun Gmail Anda untuk melanjutkan.</p>
-            
-            <button class="google-btn" onclick="loginUser()">
-                <i class="fab fa-google"></i>
-                Lanjutkan dengan Gmail
-            </button>
-            
-            <a href="admin.html" class="admin-link">Login sebagai Admin</a>
+
+            <!-- Logo & Branding -->
+            <div class="login-header">
+                <div class="logo-circle">
+                    <img src="../assets/images/owl_mascot.png" alt="MindKey Owl" class="login-logo">
+                </div>
+                <h1>MindKey</h1>
+                <p class="tagline">Kunci Pikiranmu. Buka Potensimu.</p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="tab-switcher">
+                <button id="tabLoginBtn" class="tab-btn active" onclick="switchTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+                <button id="tabRegisterBtn" class="tab-btn" onclick="switchTab('register')">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </button>
+                <div class="tab-indicator" id="tabIndicator"></div>
+            </div>
+
+            <!-- ===== LOGIN FORM ===== -->
+            <div id="loginForm" class="auth-form active-form">
+                <div class="form-group">
+                    <label for="loginEmail">
+                        <i class="fas fa-envelope"></i> Gmail Anda
+                    </label>
+                    <input type="email" id="loginEmail" placeholder="contoh@gmail.com" autocomplete="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="password-wrap">
+                        <input type="password" id="loginPassword" placeholder="Masukkan password" autocomplete="current-password" required>
+                        <button type="button" class="toggle-pw" onclick="togglePassword('loginPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button id="loginBtn" class="btn-auth" onclick="handleLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Masuk ke MindKey
+                </button>
+                <p class="switch-hint">Belum punya akun? <a href="#" onclick="switchTab('register')">Daftar sekarang</a></p>
+            </div>
+
+            <!-- ===== REGISTER FORM ===== -->
+            <div id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="regUsername">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" id="regUsername" placeholder="Nama pengguna unik Anda" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">
+                        <i class="fas fa-envelope"></i> Gmail Anda
+                    </label>
+                    <input type="email" id="regEmail" placeholder="contoh@gmail.com" autocomplete="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="password-wrap">
+                        <input type="password" id="regPassword" placeholder="Minimal 6 karakter" autocomplete="new-password" required>
+                        <button type="button" class="toggle-pw" onclick="togglePassword('regPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength" id="pwStrength">
+                        <div class="strength-bar"><span id="strengthFill"></span></div>
+                        <small id="strengthText"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regConfirm">
+                        <i class="fas fa-shield-alt"></i> Konfirmasi Password
+                    </label>
+                    <div class="password-wrap">
+                        <input type="password" id="regConfirm" placeholder="Ulangi password Anda" autocomplete="new-password" required>
+                        <button type="button" class="toggle-pw" onclick="togglePassword('regConfirm', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button id="registerBtn" class="btn-auth btn-register" onclick="handleRegister()">
+                    <i class="fas fa-user-plus"></i> Buat Akun
+                </button>
+                <p class="switch-hint">Sudah punya akun? <a href="#" onclick="switchTab('login')">Masuk di sini</a></p>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider"><span>atau</span></div>
+
+            <!-- Admin Link -->
+            <a href="admin-login.html" class="admin-link" id="adminLoginLink">
+                <i class="fas fa-user-shield"></i> Login sebagai Admin
+            </a>
+
         </div>
     </div>
 
@@ -31,11 +129,95 @@
     <script src="../assets/js/supabase-config.js"></script>
     <script src="../assets/js/ui.js"></script>
     <script src="../assets/js/auth.js"></script>
-    <script src="../assets/js/app.js"></script>
+
     <script>
+        // Redirect if already logged in
         if (localStorage.getItem('mindkey_user')) {
-            window.location.href = '../index.html';
+            window.location.replace('../index.html');
         }
+
+        // Tab switching
+        function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabLoginBtn = document.getElementById('tabLoginBtn');
+            const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+            const indicator = document.getElementById('tabIndicator');
+
+            if (tab === 'login') {
+                loginForm.classList.add('active-form');
+                registerForm.classList.remove('active-form');
+                tabLoginBtn.classList.add('active');
+                tabRegisterBtn.classList.remove('active');
+                indicator.style.transform = 'translateX(0%)';
+            } else {
+                registerForm.classList.add('active-form');
+                loginForm.classList.remove('active-form');
+                tabRegisterBtn.classList.add('active');
+                tabLoginBtn.classList.remove('active');
+                indicator.style.transform = 'translateX(100%)';
+            }
+        }
+
+        // Toggle password visibility
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        // Password strength checker
+        document.getElementById('regPassword').addEventListener('input', function() {
+            const pw = this.value;
+            const fill = document.getElementById('strengthFill');
+            const text = document.getElementById('strengthText');
+            let strength = 0;
+            if (pw.length >= 6) strength++;
+            if (pw.length >= 10) strength++;
+            if (/[A-Z]/.test(pw)) strength++;
+            if (/[0-9]/.test(pw)) strength++;
+            if (/[^A-Za-z0-9]/.test(pw)) strength++;
+
+            const levels = ['', 'Sangat Lemah', 'Lemah', 'Cukup', 'Kuat', 'Sangat Kuat'];
+            const colors = ['', '#ef4444', '#f97316', '#eab308', '#22c55e', '#10b981'];
+            const widths = ['0%', '20%', '40%', '60%', '80%', '100%'];
+
+            fill.style.width = widths[strength];
+            fill.style.background = colors[strength];
+            text.textContent = pw ? levels[strength] : '';
+            text.style.color = colors[strength];
+        });
+
+        // Handle login
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            loginUser(email, password);
+        }
+
+        // Handle register
+        function handleRegister() {
+            const username = document.getElementById('regUsername').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirm').value;
+            registerUser(username, email, password, confirm);
+        }
+
+        // Allow Enter key submission
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const loginActive = document.getElementById('loginForm').classList.contains('active-form');
+                if (loginActive) handleLogin();
+                else handleRegister();
+            }
+        });
     </script>
 </body>
 </html>

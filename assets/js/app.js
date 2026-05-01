@@ -1,19 +1,28 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    checkLogin();
-    
-    // Debug Supabase Connection
-    if (supabase) {
-        console.log("Supabase Client initialized successfully.");
-        const { data, error } = await supabase.from('payments').select('count', { count: 'exact', head: true });
-        if (error) {
-            console.error("Supabase Database Error (Table 'payments' might be missing):", error.message);
-        } else {
-            console.log("Supabase Database connected successfully.");
-        }
-    } else {
-        console.error("Supabase Client failed to initialize.");
+    // Only run auth check if NOT on admin or login pages
+    const path = window.location.pathname;
+    const isAdminPage  = path.includes('admin');
+    const isLoginPage  = path.includes('login');
+
+    if (!isAdminPage && !isLoginPage) {
+        checkLogin();
     }
 
+    // Supabase connection debug
+    if (supabase && !isAdminPage) {
+        const { data, error } = await supabase.from('payments').select('count', { count: 'exact', head: true });
+        if (error) {
+            console.warn("Supabase 'payments' table check:", error.message);
+        } else {
+            console.log("✅ Supabase connected.");
+        }
+    }
+
+    // Initialize FAQ if applicable
     if (typeof initFaqAccordion === 'function') initFaqAccordion();
-    if (typeof loadAdminPayments === 'function') loadAdminPayments();
+
+    // Load admin payments if on admin page
+    if (typeof loadAdminPayments === 'function' && document.getElementById('paymentTableBody')) {
+        loadAdminPayments();
+    }
 });

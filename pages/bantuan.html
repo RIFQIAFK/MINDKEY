@@ -98,13 +98,53 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = checkLogin();
-            if(user) {
+            if (user) {
                 const nameInput = document.getElementById('name');
-                if (nameInput) nameInput.value = user.name;
+                if (nameInput) nameInput.value = user.username || user.name || '';
                 const emailInput = document.getElementById('email');
-                if (emailInput) emailInput.value = user.email;
+                if (emailInput) emailInput.value = user.email || '';
             }
         });
+
+        async function submitHelpForm(e) {
+            e.preventDefault();
+            const name    = document.getElementById('name').value.trim();
+            const email   = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!message) { showToast('Pesan tidak boleh kosong!', 'error'); return; }
+            if (!supabase) { showToast('Koneksi database gagal!', 'error'); return; }
+
+            const btn = e.target.querySelector('button[type="submit"]');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...'; }
+
+            try {
+                const { data, error } = await supabase
+                    .from('help_tickets')
+                    .insert([{ user_name: name, user_email: email, message, status: 'open' }])
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                // Show success
+                document.getElementById('helpForm').classList.add('hidden');
+                const successEl = document.getElementById('formSuccessMessage');
+                const ticketId = data.id ? data.id.substring(0,8).toUpperCase() : 'OK';
+                successEl.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    Pesan berhasil dikirim ke tim support kami!<br>
+                    <small>Nomor Tiket: <strong>#${ticketId}</strong> — Tim kami akan segera merespons.</small>
+                `;
+                successEl.classList.remove('hidden');
+                showToast('✅ Tiket bantuan berhasil dikirim!', 'success');
+
+            } catch (err) {
+                console.error('Submit ticket error:', err);
+                showToast('Gagal mengirim pesan: ' + (err.message || 'Cek koneksi.'), 'error');
+                if (btn) { btn.disabled = false; btn.innerHTML = 'Kirim Pesan <i class="fas fa-paper-plane"></i>'; }
+            }
+        }
     </script>
 </body>
 </html>

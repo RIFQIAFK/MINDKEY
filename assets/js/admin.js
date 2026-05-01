@@ -1,85 +1,269 @@
+// ============================================================
+// admin.js — MindKey Admin Dashboard Logic
+// ============================================================
+
+// ─── PAYMENTS ───────────────────────────────────────────────
+
 async function loadAdminPayments() {
     const tbody = document.getElementById('paymentTableBody');
     if (!tbody) return;
-    
+
     if (!supabase) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">Error: Supabase CDN tidak dimuat.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="error-row"><i class="fas fa-exclamation-circle"></i> Error: Supabase tidak dimuat.</td></tr>';
         return;
     }
-    
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">Memuat data dari server...</td></tr>';
-    
+
+    tbody.innerHTML = '<tr><td colspan="6" class="loading-row"><i class="fas fa-spinner fa-spin"></i> Memuat data pembayaran...</td></tr>';
+
     try {
         const { data: payments, error } = await supabase
             .from('payments')
             .select('*')
             .order('created_at', { ascending: false });
-            
+
         if (error) throw error;
-        
+
         if (!payments || payments.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">Belum ada data pembayaran</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-row"><i class="fas fa-inbox"></i><br>Belum ada data pembayaran</td></tr>';
             return;
         }
-        
+
         tbody.innerHTML = payments.map(p => `
             <tr>
-                <td style="font-size: 12px; color: #888;">${p.id ? p.id.substring(0,8) : '-'}...</td>
-                <td>${p.user_name}</td>
-                <td>${p.user_email}</td>
-                <td>${p.created_at ? new Date(p.created_at).toLocaleDateString('id-ID') : '-'}</td>
-                <td><span class="status-badge status-${p.status}">${p.status === 'pending' ? 'Menunggu' : p.status === 'approved' ? 'Disetujui' : 'Ditolak'}</span></td>
+                <td class="id-cell">${p.id ? p.id.substring(0,8) : '-'}...</td>
+                <td><strong>${p.user_name || '-'}</strong></td>
+                <td class="email-cell">${p.user_email || '-'}</td>
+                <td>${p.created_at ? new Date(p.created_at).toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric'}) : '-'}</td>
+                <td><span class="status-badge status-${p.status}">${statusLabel(p.status)}</span></td>
                 <td class="action-btns">
-                    ${p.status === 'pending' ? `
-                        <button class="btn-approve" onclick="approvePayment('${p.id}')">Setujui</button>
-                        <button class="btn-reject" onclick="rejectPayment('${p.id}')">Tolak</button>
-                    ` : (p.token ? `<strong style="color:#10b981; font-size:12px;">Token: ${p.token}</strong>` : '-')}
+                    ${p.status === 'pending'
+                        ? `<button class="btn-approve" onclick="approvePayment('${p.id}')"><i class="fas fa-check"></i> Setujui</button>
+                           <button class="btn-reject"  onclick="rejectPayment('${p.id}')"><i class="fas fa-times"></i> Tolak</button>`
+                        : (p.token
+                            ? `<span class="token-label"><i class="fas fa-key"></i> ${p.token}</span>`
+                            : '<span class="done-label">Selesai</span>')}
                 </td>
             </tr>
         `).join('');
+
     } catch (err) {
-        console.error("Error loading payments:", err);
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: red;">Terjadi kesalahan saat memuat data. Pastikan Anda telah membuat tabel "payments" di Supabase Dashboard.</td></tr>';
-        alert("Gagal memuat data Admin. Pastikan tabel 'payments' sudah ada di Supabase!");
+        console.error('Error loading payments:', err);
+        tbody.innerHTML = `<tr><td colspan="6" class="error-row"><i class="fas fa-exclamation-triangle"></i> Gagal memuat: ${err.message}</td></tr>`;
     }
+}
+
+function statusLabel(s) {
+    const map = { pending: 'Menunggu', approved: 'Disetujui', rejected: 'Ditolak' };
+    return map[s] || s;
 }
 
 async function approvePayment(id) {
     if (!supabase) return;
-    
     const token = 'MIND-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-    
     try {
-        const { data, error } = await supabase
-            .from('payments')
-            .update({ status: 'approved', token: token })
-            .eq('id', id);
-            
+        const { error } = await supabase.from('payments').update({ status: 'approved', token }).eq('id', id);
         if (error) throw error;
-        
-        showToast(`✅ Disetujui! Token: ${token}`, "success");
+        showToast(`✅ Disetujui! Token: ${token}`, 'success');
         loadAdminPayments();
     } catch (err) {
-        console.error("Error approving:", err);
-        showToast("Gagal menyetujui. Cek console.", "error");
+        showToast('Gagal menyetujui: ' + err.message, 'error');
     }
 }
 
 async function rejectPayment(id) {
     if (!supabase) return;
-    
     try {
-        const { data, error } = await supabase
-            .from('payments')
-            .update({ status: 'rejected' })
-            .eq('id', id);
-            
+        const { error } = await supabase.from('payments').update({ status: 'rejected' }).eq('id', id);
         if (error) throw error;
-        
-        showToast("❌ Ditolak", "error");
+        showToast('❌ Pembayaran ditolak', 'error');
         loadAdminPayments();
     } catch (err) {
-        console.error("Error rejecting:", err);
-        showToast("Gagal menolak. Cek console.", "error");
+        showToast('Gagal menolak: ' + err.message, 'error');
+    }
+}
+
+// ─── COMPLAINTS (HELP TICKETS) ───────────────────────────────
+
+let allTickets = [];
+let currentFilter = 'all';
+let replyTargetId = null;
+
+async function loadComplaints() {
+    const list = document.getElementById('complaintsList');
+    if (!list) return;
+
+    if (!supabase) {
+        list.innerHTML = '<div class="error-row"><i class="fas fa-exclamation-circle"></i> Supabase tidak dimuat.</div>';
+        return;
+    }
+
+    list.innerHTML = '<div class="loading-row"><i class="fas fa-spinner fa-spin"></i> Memuat tiket bantuan...</div>';
+
+    try {
+        const { data: tickets, error } = await supabase
+            .from('help_tickets')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        allTickets = tickets || [];
+        updateCounts();
+        renderComplaints(allTickets, currentFilter);
+
+    } catch (err) {
+        console.error('Error loading tickets:', err);
+        list.innerHTML = `<div class="error-row"><i class="fas fa-exclamation-triangle"></i> Gagal memuat tiket: ${err.message}</div>`;
+    }
+}
+
+function updateCounts() {
+    const countAll      = allTickets.length;
+    const countOpen     = allTickets.filter(t => t.status === 'open').length;
+    const countProgress = allTickets.filter(t => t.status === 'in_progress').length;
+    const countResolved = allTickets.filter(t => t.status === 'resolved').length;
+
+    document.getElementById('countAll')      && (document.getElementById('countAll').textContent      = countAll);
+    document.getElementById('countOpen')     && (document.getElementById('countOpen').textContent     = countOpen);
+    document.getElementById('countProgress') && (document.getElementById('countProgress').textContent = countProgress);
+    document.getElementById('countResolved') && (document.getElementById('countResolved').textContent = countResolved);
+
+    const badge = document.getElementById('openTicketCount');
+    if (badge) { badge.textContent = countOpen; badge.style.display = countOpen > 0 ? 'inline-flex' : 'none'; }
+}
+
+function renderComplaints(tickets, filter) {
+    const list = document.getElementById('complaintsList');
+    if (!list) return;
+
+    const filtered = filter === 'all' ? tickets : tickets.filter(t => t.status === filter);
+
+    if (filtered.length === 0) {
+        list.innerHTML = `<div class="empty-row"><i class="fas fa-check-double"></i><br>Tidak ada tiket ${filter === 'all' ? '' : '— ' + filterLabel(filter)}</div>`;
+        return;
+    }
+
+    list.innerHTML = filtered.map(t => `
+        <div class="complaint-card status-card-${t.status}">
+            <div class="complaint-meta">
+                <div class="complaint-user">
+                    <div class="user-avatar">${(t.user_name || '?')[0].toUpperCase()}</div>
+                    <div>
+                        <strong>${t.user_name || 'Anonim'}</strong>
+                        <span class="user-email">${t.user_email || '-'}</span>
+                    </div>
+                </div>
+                <div class="complaint-right">
+                    <span class="complaint-date">${t.created_at ? new Date(t.created_at).toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '-'}</span>
+                    <span class="ticket-status-badge status-ticket-${t.status}">${ticketStatusLabel(t.status)}</span>
+                </div>
+            </div>
+
+            <div class="complaint-message">
+                <p>${escHtml(t.message || '')}</p>
+            </div>
+
+            ${t.admin_reply ? `
+            <div class="admin-reply-preview">
+                <i class="fas fa-reply"></i> <strong>Balasan Admin:</strong> ${escHtml(t.admin_reply)}
+            </div>` : ''}
+
+            <div class="complaint-actions">
+                ${t.status !== 'resolved' ? `
+                    <button class="btn-reply" onclick="openReplyModal('${t.id}', '${escAttr(t.user_name)}', '${escAttr(t.message)}')">
+                        <i class="fas fa-reply"></i> Balas
+                    </button>
+                    <button class="btn-resolve" onclick="resolveTicket('${t.id}')">
+                        <i class="fas fa-check-double"></i> Tandai Selesai
+                    </button>
+                ` : '<span class="resolved-label"><i class="fas fa-check-circle"></i> Selesai ditangani</span>'}
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterComplaints(filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    const btnMap = { all: 'filterAll', open: 'filterOpen', in_progress: 'filterProgress', resolved: 'filterResolved' };
+    const btn = document.getElementById(btnMap[filter]);
+    if (btn) btn.classList.add('active');
+    renderComplaints(allTickets, filter);
+}
+
+function ticketStatusLabel(s) {
+    const map = { open: '🟡 Open', in_progress: '🔵 Diproses', resolved: '✅ Selesai' };
+    return map[s] || s;
+}
+
+function filterLabel(s) {
+    const map = { open: 'Open', in_progress: 'Sedang Diproses', resolved: 'Selesai' };
+    return map[s] || s;
+}
+
+function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(str) {
+    return (str || '').replace(/'/g, "\\'").replace(/\n/g, ' ').substring(0, 100);
+}
+
+// ─── Reply Modal ─────────────────────────────────────────────
+
+function openReplyModal(id, userName, message) {
+    replyTargetId = id;
+    document.getElementById('ticketPreview').innerHTML = `
+        <strong><i class="fas fa-user"></i> ${escHtml(userName)}</strong>
+        <p>${escHtml(message.substring(0, 200))}${message.length > 200 ? '...' : ''}</p>
+    `;
+    document.getElementById('replyText').value = '';
+    document.getElementById('replyModal').classList.remove('hidden');
+}
+
+function closeReplyModal() {
+    document.getElementById('replyModal').classList.add('hidden');
+    replyTargetId = null;
+}
+
+async function sendReply() {
+    const reply = document.getElementById('replyText').value.trim();
+    if (!reply) { showToast('Tulis balasan terlebih dahulu!', 'error'); return; }
+    if (!supabase || !replyTargetId) return;
+
+    const btn = document.querySelector('.btn-send-reply');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+
+    try {
+        const { error } = await supabase
+            .from('help_tickets')
+            .update({ admin_reply: reply, status: 'in_progress' })
+            .eq('id', replyTargetId);
+
+        if (error) throw error;
+
+        showToast('✅ Balasan berhasil dikirim!', 'success');
+        closeReplyModal();
+        await loadComplaints();
+    } catch (err) {
+        showToast('Gagal mengirim balasan: ' + err.message, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Balasan';
+    }
+}
+
+async function resolveTicket(id) {
+    if (!supabase) return;
+    try {
+        const { error } = await supabase
+            .from('help_tickets')
+            .update({ status: 'resolved' })
+            .eq('id', id);
+        if (error) throw error;
+        showToast('✅ Tiket ditandai selesai!', 'success');
+        await loadComplaints();
+    } catch (err) {
+        showToast('Gagal mengupdate tiket: ' + err.message, 'error');
     }
 }
