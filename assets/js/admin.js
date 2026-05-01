@@ -256,9 +256,18 @@ async function sendReply() {
         };
 
         // Ganti SERVICE_ID dan TEMPLATE_ID sesuai dashboard EmailJS Anda
-        await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+        if (typeof emailjs !== 'undefined' && !window.location.href.includes('YOUR_PUBLIC_KEY')) {
+            try {
+                await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+                showToast('✅ Balasan disimpan & Email terkirim!', 'success');
+            } catch (emailErr) {
+                console.warn('EmailJS error (Mungkin kunci belum valid):', emailErr);
+                showToast('✅ Tersimpan di database (Email gagal kirim)', 'info');
+            }
+        } else {
+            showToast('✅ Balasan berhasil disimpan!', 'success');
+        }
 
-        showToast('✅ Balasan disimpan & Email terkirim!', 'success');
         closeReplyModal();
         await loadComplaints();
     } catch (err) {
