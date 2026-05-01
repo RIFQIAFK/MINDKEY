@@ -170,7 +170,7 @@ function renderComplaints(tickets, filter) {
 
             <div class="complaint-actions">
                 ${t.status !== 'resolved' ? `
-                    <button class="btn-reply" onclick="openReplyModal('${t.id}', '${escAttr(t.user_name)}', '${escAttr(t.message)}')">
+                    <button class="btn-reply" onclick="openReplyModal('${t.id}', '${escAttr(t.user_name)}', '${escAttr(t.user_email)}', '${escAttr(t.message)}')">
                         <i class="fas fa-reply"></i> Balas
                     </button>
                     <button class="btn-resolve" onclick="resolveTicket('${t.id}')">
@@ -210,10 +210,13 @@ function escAttr(str) {
 
 // ─── Reply Modal ─────────────────────────────────────────────
 
-function openReplyModal(id, userName, message) {
+let replyTargetEmail = null;
+
+function openReplyModal(id, userName, userEmail, message) {
     replyTargetId = id;
+    replyTargetEmail = userEmail;
     document.getElementById('ticketPreview').innerHTML = `
-        <strong><i class="fas fa-user"></i> ${escHtml(userName)}</strong>
+        <strong><i class="fas fa-user"></i> ${escHtml(userName)} (${escHtml(userEmail)})</strong>
         <p>${escHtml(message.substring(0, 200))}${message.length > 200 ? '...' : ''}</p>
     `;
     document.getElementById('replyText').value = '';
@@ -235,6 +238,7 @@ async function sendReply() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
 
     try {
+        // 1. Update Database Supabase
         const { error } = await supabase
             .from('help_tickets')
             .update({ admin_reply: reply, status: 'in_progress' })
@@ -242,11 +246,24 @@ async function sendReply() {
 
         if (error) throw error;
 
-        showToast('✅ Balasan berhasil dikirim!', 'success');
+        // 2. Kirim Email via EmailJS
+        // Pastikan Anda sudah setting Template di EmailJS
+        const templateParams = {
+            to_email: replyTargetEmail,
+            to_name: document.getElementById('ticketPreview').querySelector('strong').innerText.split('(')[0].trim(),
+            admin_reply: reply,
+            user_message: document.getElementById('ticketPreview').querySelector('p').innerText
+        };
+
+        // Ganti SERVICE_ID dan TEMPLATE_ID sesuai dashboard EmailJS Anda
+        await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+
+        showToast('✅ Balasan disimpan & Email terkirim!', 'success');
         closeReplyModal();
         await loadComplaints();
     } catch (err) {
-        showToast('Gagal mengirim balasan: ' + err.message, 'error');
+        console.error('Reply error:', err);
+        showToast('Gagal memproses: ' + (err.message || 'Cek koneksi/EmailJS'), 'error');
     } finally {
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Balasan';
