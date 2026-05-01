@@ -96,7 +96,7 @@ async function approvePayment(id) {
         };
 
         if (typeof emailjs !== 'undefined') {
-            await emailjs.send('service_2ehevtg', 'template_w5j90r2', templateParams);
+            await emailjs.send('service_2ehevtg', 'template_g4xwhof', templateParams);
             showToast(`✅ Disetujui & APK Terkirim ke ${p.user_email}`, 'success');
         } else {
             showToast(`✅ Disetujui! Token: ${token}`, 'success');
@@ -294,10 +294,10 @@ async function sendReply() {
             admin_reply: reply // Anda perlu tambahkan {{admin_reply}} di isi template EmailJS Anda
         };
 
-        // Ganti SERVICE_ID dan TEMPLATE_ID sesuai dashboard EmailJS Anda
+        // Update: Menggunakan ID khusus balas pesan
         if (typeof emailjs !== 'undefined') {
             try {
-                await emailjs.send('service_2ehevtg', 'template_w5j90r2', templateParams);
+                await emailjs.send('service_2ehevtg', 'template_1covyia', templateParams);
                 showToast('✅ Balasan disimpan & Email terkirim!', 'success');
             } catch (emailErr) {
                 console.warn('EmailJS error:', emailErr);
