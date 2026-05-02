@@ -29,6 +29,20 @@ function toggleMenu() {
     }
 }
 
+// Menutup menu mobile saat link diklik
+function initMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    const links = document.querySelectorAll('.nav-links a');
+    
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks && navLinks.classList.contains('show')) {
+                navLinks.classList.remove('show');
+            }
+        });
+    });
+}
+
 function initFaqAccordion() {
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {

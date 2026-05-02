@@ -37,8 +37,8 @@ async function loadAdminPayments() {
                 <td><span class="status-badge status-${p.status}">${statusLabel(p.status)}</span></td>
                 <td class="action-btns">
                     ${p.status === 'pending'
-                        ? `<button class="btn-approve" onclick="approvePayment('${p.id}')"><i class="fas fa-check"></i> Setujui</button>
-                           <button class="btn-reject"  onclick="rejectPayment('${p.id}')"><i class="fas fa-times"></i> Tolak</button>`
+                        ? `<button class="btn-approve" onclick="approvePayment(event, '${p.id}')"><i class="fas fa-check"></i> Setujui</button>
+                           <button class="btn-reject"  onclick="rejectPayment(event, '${p.id}')"><i class="fas fa-times"></i> Tolak</button>`
                         : (p.token
                             ? `<span class="token-label"><i class="fas fa-key"></i> ${p.token}</span>`
                             : '<span class="done-label">Selesai</span>')}
@@ -53,16 +53,21 @@ async function loadAdminPayments() {
 }
 
 function statusLabel(s) {
-    const map = { pending: 'Menunggu', approved: 'Disetujui', rejected: 'Ditolak' };
+    const map = { 
+        pending: 'Menunggu', 
+        approved: 'Disetujui', 
+        rejected: 'Ditolak',
+        activated: '✅ Aktif'
+    };
     return map[s] || s;
 }
 
-async function approvePayment(id) {
+async function approvePayment(event, id) {
     if (!supabase) return;
     
     // Matikan tombol agar tidak double klik
-    if (event && event.target) {
-        const btn = event.target;
+    const btn = event ? event.currentTarget : null;
+    if (btn) {
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>...';
     }
@@ -92,17 +97,24 @@ async function approvePayment(id) {
             email: p.user_email,
             name: p.user_name,
             title: "Pembelian MindKey Disetujui! 🦉",
-            admin_reply: `Selamat! Pembelian Anda telah disetujui.\n\nToken Aktivasi: ${token}\nLink Download APK: https://bit.ly/DownloadMindKeyAPK\n\nSilakan masukkan token tersebut di menu Aktivasi aplikasi MindKey untuk membuka semua fitur.`,
+            token: token,
+            apk_link: "https://bit.ly/DownloadMindKeyAPK",
+            admin_reply: `Pembayaran Anda telah disetujui!\n\nTOKEN AKTIVASI: ${token}\nDOWNLOAD APK: https://bit.ly/DownloadMindKeyAPK\n\nSilakan masukkan token di halaman Aktivasi pada aplikasi atau website.`
         };
 
         if (typeof emailjs !== 'undefined') {
-            await emailjs.send('service_2ehevtg', 'template_g4xwhof', templateParams);
-            showToast(`✅ Disetujui & APK Terkirim ke ${p.user_email}`, 'success');
+            try {
+                await emailjs.send('service_2ehevtg', 'template_g4xwhof', templateParams);
+                showToast(`✅ Disetujui & Email Terkirim ke ${p.user_email}`, 'success');
+            } catch (emailErr) {
+                console.error('EmailJS Error:', emailErr);
+                showToast(`✅ Disetujui! (Email gagal: ${emailErr.message || 'Cek limit'})`, 'info');
+            }
         } else {
             showToast(`✅ Disetujui! Token: ${token}`, 'success');
         }
 
-        loadAdminPayments();
+        await loadAdminPayments();
     } catch (err) {
         console.error('Approve error:', err);
         showToast('Gagal memproses: ' + err.message, 'error');
@@ -110,13 +122,13 @@ async function approvePayment(id) {
     }
 }
 
-async function rejectPayment(id) {
+async function rejectPayment(event, id) {
     if (!supabase) return;
     try {
         const { error } = await supabase.from('payments').update({ status: 'rejected' }).eq('id', id);
         if (error) throw error;
         showToast('❌ Pembayaran ditolak', 'error');
-        loadAdminPayments();
+        await loadAdminPayments();
     } catch (err) {
         showToast('Gagal menolak: ' + err.message, 'error');
     }

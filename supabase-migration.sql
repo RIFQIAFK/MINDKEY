@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS payments (
     id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     user_name   TEXT NOT NULL,
     user_email  TEXT NOT NULL,
-    status      TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
+    status      TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'activated')),
     token       TEXT,
     created_at  TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

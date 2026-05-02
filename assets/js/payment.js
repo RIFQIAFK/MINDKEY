@@ -99,7 +99,13 @@ async function verifyAppToken(token) {
         }
         
         if (data) {
-            // Token valid
+            // 1. Update status ke 'activated' agar admin tahu di dashboard
+            await supabase
+                .from('payments')
+                .update({ status: 'activated' })
+                .eq('id', data.id);
+
+            // 2. Simpan status premium di local storage
             localStorage.setItem('mindkey_premium', 'true');
             return true;
         }

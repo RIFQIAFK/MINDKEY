@@ -18,8 +18,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Initialize FAQ if applicable
+    // Initialize UI components
     if (typeof initFaqAccordion === 'function') initFaqAccordion();
+    if (typeof initMobileMenu === 'function') initMobileMenu();
 
     // Load admin payments if on admin page
     if (typeof loadAdminPayments === 'function' && document.getElementById('paymentTableBody')) {

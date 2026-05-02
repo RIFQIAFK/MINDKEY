@@ -210,6 +210,7 @@ tbody tr:hover { background: var(--surface-low); }
 .status-pending  { background: rgba(212,129,102,0.15); color: var(--accent-h); border: 1px solid rgba(212,129,102,0.3); }
 .status-approved { background: rgba(61,107,79,0.12);   color: var(--success);  border: 1px solid rgba(61,107,79,0.25); }
 .status-rejected { background: rgba(139,58,46,0.1);    color: var(--danger);   border: 1px solid rgba(139,58,46,0.2); }
+.status-activated { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
 
 .token-label { font-size: 0.76rem; color: var(--success); font-weight: 700; }
 .done-label  { font-size: 0.76rem; color: var(--outline); }
