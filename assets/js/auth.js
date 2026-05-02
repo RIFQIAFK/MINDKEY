@@ -6,6 +6,12 @@ let currentUser = null;
 
 // --- SHA-256 Hash Utility ---
 async function hashPassword(password) {
+    if (!window.crypto || !window.crypto.subtle) {
+        console.error("Crypto Subtle tidak tersedia. Fitur ini memerlukan HTTPS atau Localhost.");
+        // Fallback sederhana agar tidak crash saat testing lokal (TIDAK AMAN untuk produksi)
+        // Kita gunakan btoa sebagai 'hash' darurat agar user bisa lanjut testing.
+        return 'fallback_' + btoa(password).substring(0, 20);
+    }
     const msgBuffer = new TextEncoder().encode(password);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -57,8 +63,13 @@ async function registerUser(username, email, password, confirmPassword) {
         const { data: existing, error: checkErr } = await supabase
             .from('users')
             .select('email')
-            .eq('email', email.toLowerCase())
+            .eq('email', email.toLowerCase().trim())
             .maybeSingle();
+
+        if (checkErr) {
+            console.error('Check email error:', checkErr);
+            throw new Error(checkErr.message || 'Gagal mengecek ketersediaan email.');
+        }
 
         if (existing) {
             showToast('Email sudah terdaftar! Silakan login.', 'error');
@@ -70,11 +81,16 @@ async function registerUser(username, email, password, confirmPassword) {
 
         const { data, error } = await supabase
             .from('users')
-            .insert([{ username: username.trim(), email: email.toLowerCase().trim(), password_hash: passwordHash }])
+            .insert([{ 
+                username: username.trim(), 
+                email: email.toLowerCase().trim(), 
+                password_hash: passwordHash 
+            }])
             .select()
             .single();
 
         if (error) throw error;
+        if (!data) throw new Error('Data tidak dikembalikan setelah registrasi.');
 
         const user = { id: data.id, username: data.username, email: data.email };
         localStorage.setItem('mindkey_user', JSON.stringify(user));
@@ -115,7 +131,10 @@ async function loginUser(email, password) {
             .eq('password_hash', passwordHash)
             .maybeSingle();
 
-        if (error) throw error;
+        if (error) {
+            console.error('Login database error:', error);
+            throw error;
+        }
 
         if (!user) {
             showToast('Email atau password salah!', 'error');
